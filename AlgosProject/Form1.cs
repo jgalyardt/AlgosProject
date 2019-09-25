@@ -26,8 +26,8 @@ namespace AlgosProject
             font = new System.Drawing.Font("Arial", 12);
             formGraphics = CreateGraphics();
 
-            var cauchy = from x in UniformDistribution() select CauchyQuantile(x);
-            histogram = CreateHistogram(cauchy.Take(100000), 50, -5.0, 5.0);
+            var distribution = from x in UniformDistribution() select UniformQuantile(x);
+            histogram = CreateHistogram(distribution.Take(100000), 50, 0.0, 1.0);
             histogramMax = histogram.Max();
 
             InitializeComponent();   
@@ -53,6 +53,11 @@ namespace AlgosProject
         private static double UniformQuantile(double p)
         {
             return p;
+        }
+
+        private static double SkewedQuantile(double p)
+        {
+            return p/2;
         }
 
         private static double CauchyQuantile(double p)
