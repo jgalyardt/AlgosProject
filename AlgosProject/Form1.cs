@@ -26,11 +26,11 @@ namespace AlgosProject
             font = new System.Drawing.Font("Arial", 12);
             formGraphics = CreateGraphics();
 
-            var distribution = from x in UniformDistribution() select UniformQuantile(x);
-            histogram = CreateHistogram(distribution.Take(100000), 50, 0.0, 1.0);
+            var distribution = from x in UniformDistribution() select SkewedQuantile(x);
+            histogram = CreateHistogram(distribution.Take(100000), 50, 1.0, 2.0);
             histogramMax = histogram.Max();
 
-            InitializeComponent();   
+            InitializeComponent();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -39,7 +39,16 @@ namespace AlgosProject
 
             for (int i = 0; i < histogram.Length; i++)
             {
-                int bucketHeight = histogram[i] / (histogramMax / 260);
+                int bucketHeight;
+                try
+                {
+                    bucketHeight = histogram[i] / (histogramMax / 260);
+                }
+                catch (DivideByZeroException)
+                {
+                    Console.WriteLine("Error: Divide by zero.");
+                    break;
+                }
                 formGraphics.FillRectangle(brush, new Rectangle((280/histogram.Length)*i, 260 - bucketHeight, 280 / histogram.Length, bucketHeight));
             }
         }
@@ -50,17 +59,22 @@ namespace AlgosProject
             while (true) yield return random.NextDouble();
         }
 
-        private static double UniformQuantile(double p)
+        private static double UniformQuantile(double p) //Range: 0.0 to 1.0
         {
             return p;
         }
 
-        private static double SkewedQuantile(double p)
+        private static double SkewedQuantile(double p) //Range: 1.0 to 2.0
         {
-            return p/2;
+            return 1 + Math.Sqrt(1-p);
         }
 
-        private static double CauchyQuantile(double p)
+        private static double TieredQuantile(double p) //Range: TODO
+        {
+            return p;
+        }
+
+        private static double CauchyQuantile(double p) //Range: -5.0 to 5.0
         {
             return Math.Tan(Math.PI * (p - 0.5));
         }
