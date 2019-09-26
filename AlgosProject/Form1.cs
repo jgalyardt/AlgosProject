@@ -12,20 +12,52 @@ namespace AlgosProject
 {
     public partial class Form1 : Form
     {
+        private System.Drawing.SolidBrush brush;
+        private System.Drawing.Font font;
+        private System.Drawing.Graphics formGraphics;
+        private int[] histogram;
+        private int histogramMax;
+        private static Random random;
 
         public Form1()
         {
-            InitializeComponent();
+            random = new Random();
+            brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
+            font = new System.Drawing.Font("Arial", 12);
+            formGraphics = CreateGraphics();
 
-            var cauchy = from x in UniformDistribution() select CauchyQuantile(x);
-            int[] histogram = CreateHistogram(cauchy.Take(100000), 50, -5.0, 5.0);
+            var distribution = from x in UniformDistribution() select UniformQuantile(x);
+            histogram = CreateHistogram(distribution.Take(100000), 50, 0.0, 1.0);
+            histogramMax = histogram.Max();
+
+            InitializeComponent();   
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
 
-        private static Random random = new Random();
+            for (int i = 0; i < histogram.Length; i++)
+            {
+                int bucketHeight = histogram[i] / (histogramMax / 260);
+                formGraphics.FillRectangle(brush, new Rectangle((280/histogram.Length)*i, 260 - bucketHeight, 280 / histogram.Length, bucketHeight));
+            }
+        }
+
+        //+https://blogs.msdn.microsoft.com/ericlippert/2012/02/21/generating-random-non-uniform-data-in-c/
         private static IEnumerable<double> UniformDistribution()
         {
             while (true) yield return random.NextDouble();
+        }
+
+        private static double UniformQuantile(double p)
+        {
+            return p;
+        }
+
+        private static double SkewedQuantile(double p)
+        {
+            return p/2;
         }
 
         private static double CauchyQuantile(double p)
@@ -45,6 +77,5 @@ namespace AlgosProject
             }
             return results;
         }
-
     }
 }
