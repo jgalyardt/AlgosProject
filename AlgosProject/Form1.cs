@@ -27,7 +27,7 @@ namespace AlgosProject
             formGraphics = CreateGraphics();
 
             var distribution = from x in UniformDistribution() select SkewedQuantile(x);
-            histogram = CreateHistogram(distribution.Take(100000), 50, 1.0, 2.0);
+            histogram = CreateHistogram(distribution.Take(100000), 50, 0.0, 1.0);
             histogramMax = histogram.Max();
 
             InitializeComponent();
@@ -64,21 +64,31 @@ namespace AlgosProject
             return p;
         }
 
-        private static double SkewedQuantile(double p) //Range: 1.0 to 2.0
+        private static double SkewedQuantile(double p) //Range: 1.0 to 2.0 --> normalize
         {
-            return 1 + Math.Sqrt(1-p);
+            return Math.Abs(1.0 - (((1 + Math.Sqrt(1-p)) - 1.0) / (2.0 - 1.0)));
         }
 
-        private static double TieredQuantile(double p) //Range: TODO
+        private static double TieredQuantile(double p) //Range: 0.0 to 1.0
         {
-            return p;
+            //This is effectively a piecewise function
+            if (p <= 0.4) return random.NextDouble() * (0.25);
+            if (p <= 0.7) return random.NextDouble() * (0.50 - 0.25) + 0.25;
+            if (p <= 0.9) return random.NextDouble() * (0.75 - 0.50) + 0.50;
+            return random.NextDouble() * (1.0 - 0.75) + 0.75;
+
+            //if (p <= 0.4) return (0.25) * (p / 0.25);
+            //if (p <= 0.7) return (0.5 - 0.25) * ((p - 0.25) / (0.5 - 0.25)) + 0.25;
+            //if (p <= 0.9) return (0.75 - 0.5) * ((p - 0.5) / (0.75 - 0.5)) + 0.5;
+            //return (1.0 - 0.75) * ((p - 0.75) / (1.0 - 0.75)) + 0.75;
         }
 
-        private static double CauchyQuantile(double p) //Range: -5.0 to 5.0
+        private static double CauchyQuantile(double p) //Range: -5.0 to 5.0 --> normalize
         {
-            return Math.Tan(Math.PI * (p - 0.5));
+            return ((Math.Tan(Math.PI * (p - 0.5))) - -5.0) / (5.0 - -5.0);
         }
 
+        //This function was taken from above link about generating non-uniform data
         private static int[] CreateHistogram(IEnumerable<double> data, int buckets, double min, double max)
         {
             int[] results = new int[buckets];
