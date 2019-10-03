@@ -31,7 +31,7 @@ namespace AlgosProject
             histogram = CreateHistogram(distribution.Take(10000000), 50, 0.0, 1.0);
             histogramMax = histogram.Max();
 
-            partOne(Directory.GetCurrentDirectory() + "\\config.txt");
+            PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
 
             InitializeComponent();
         }
@@ -101,12 +101,12 @@ namespace AlgosProject
         }
 
         //Read input from a config file, perform
-        private static void partOne(String pathToConfig)
+        private static void PartOne(String pathToConfig)
         {
             int numCourses = -1;
             int numStudents = -1;
             int coursesPerStudent = -1;
-            String distribution = "DEFAULT";
+            String distributionType = "DEFAULT";
             String configString = "DEFAULT";
 
             StreamReader sr = new StreamReader(pathToConfig);
@@ -128,7 +128,10 @@ namespace AlgosProject
                             int.TryParse(line.Substring(configString.Length + 1), out coursesPerStudent);
                             break;
                         case ("DIST"):
-                            distribution = line.Substring(configString.Length + 1);
+                            distributionType = line.Substring(configString.Length + 1);
+                            break;
+                        default:
+                            Console.WriteLine($"Unexpected line: '{line}'");
                             break;
                     }
                 }
@@ -139,7 +142,37 @@ namespace AlgosProject
                 
                 line = sr.ReadLine();
             }
-            Console.WriteLine(numCourses + ", " + numStudents + ", " + coursesPerStudent + ", " + distribution);
+            Console.WriteLine(numCourses + ", " + numStudents + ", " + coursesPerStudent + ", " + distributionType);
+
+            //Select distribution function 
+            IEnumerable<double> distribution = null;
+            switch (distributionType)
+            {
+                case ("uniform"):
+                    distribution = from x in UniformDistribution() select UniformQuantile(x);
+                    break;
+                case ("skewed"):
+                    distribution = from x in UniformDistribution() select SkewedQuantile(x);
+                    break;
+                case ("tiered"):
+                    distribution = from x in UniformDistribution() select TieredQuantile(x);
+                    break;
+                case ("cauchy"):
+                    distribution = from x in UniformDistribution() select CauchyQuantile(x);
+                    break;
+                default:
+                    Console.WriteLine($"Unexpected distribution: '{distributionType}'");
+                    break;
+            }
+
+            //Select courses for each student
+            for (int i = 0; i < numStudents; i++)
+            {
+                distribution.Take(coursesPerStudent)
+            }
+
+
+
         } 
     }
 }
