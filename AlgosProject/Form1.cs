@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AlgosProject
 {
@@ -26,9 +27,11 @@ namespace AlgosProject
             font = new System.Drawing.Font("Arial", 12);
             formGraphics = CreateGraphics();
 
-            var distribution = from x in UniformDistribution() select SkewedQuantile(x);
-            histogram = CreateHistogram(distribution.Take(100000), 50, 0.0, 1.0);
+            var distribution = from x in UniformDistribution() select CauchyQuantile(x);
+            histogram = CreateHistogram(distribution.Take(10000000), 50, 0.0, 1.0);
             histogramMax = histogram.Max();
+
+            partOne(Directory.GetCurrentDirectory() + "\\config.txt");
 
             InitializeComponent();
         }
@@ -76,11 +79,6 @@ namespace AlgosProject
             if (p <= 0.7) return random.NextDouble() * (0.50 - 0.25) + 0.25;
             if (p <= 0.9) return random.NextDouble() * (0.75 - 0.50) + 0.50;
             return random.NextDouble() * (1.0 - 0.75) + 0.75;
-
-            //if (p <= 0.4) return (0.25) * (p / 0.25);
-            //if (p <= 0.7) return (0.5 - 0.25) * ((p - 0.25) / (0.5 - 0.25)) + 0.25;
-            //if (p <= 0.9) return (0.75 - 0.5) * ((p - 0.5) / (0.75 - 0.5)) + 0.5;
-            //return (1.0 - 0.75) * ((p - 0.75) / (1.0 - 0.75)) + 0.75;
         }
 
         private static double CauchyQuantile(double p) //Range: -5.0 to 5.0 --> normalize
@@ -101,5 +99,47 @@ namespace AlgosProject
             }
             return results;
         }
+
+        //Read input from a config file, perform
+        private static void partOne(String pathToConfig)
+        {
+            int numCourses = -1;
+            int numStudents = -1;
+            int coursesPerStudent = -1;
+            String distribution = "DEFAULT";
+            String configString = "DEFAULT";
+
+            StreamReader sr = new StreamReader(pathToConfig);
+            String line = sr.ReadLine();
+            while (line != null)
+            {
+                try
+                {
+                    configString = line.Substring(0, line.IndexOf('='));
+                    switch (configString)
+                    {
+                        case ("C"):
+                            int.TryParse(line.Substring(configString.Length + 1), out numCourses);
+                            break;
+                        case ("S"):
+                            int.TryParse(line.Substring(configString.Length + 1), out numStudents);
+                            break;
+                        case ("K"):
+                            int.TryParse(line.Substring(configString.Length + 1), out coursesPerStudent);
+                            break;
+                        case ("DIST"):
+                            distribution = line.Substring(configString.Length + 1);
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine($"Unable to parse '{configString}'");
+                }
+                
+                line = sr.ReadLine();
+            }
+            Console.WriteLine(numCourses + ", " + numStudents + ", " + coursesPerStudent + ", " + distribution);
+        } 
     }
 }
