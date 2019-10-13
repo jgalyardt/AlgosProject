@@ -20,39 +20,47 @@ namespace AlgosProject
         private int histogramMax;
         private static Random random;
 
+        private bool SHOW_GRAPH = false;
+
         public Form1()
         {
             random = new Random();
-            brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-            font = new System.Drawing.Font("Arial", 12);
-            formGraphics = CreateGraphics();
-
-            var distribution = from x in UniformDistribution() select CauchyQuantile(x);
-            histogram = CreateHistogram(distribution.Take(10000000), 50, 0.0, 1.0);
-            histogramMax = histogram.Max();
-
             PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
 
-            InitializeComponent();
+            if (SHOW_GRAPH)
+            {
+                brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
+                font = new System.Drawing.Font("Arial", 12);
+                formGraphics = CreateGraphics();
+
+                var distribution = from x in UniformDistribution() select CauchyQuantile(x);
+                histogram = CreateHistogram(distribution.Take(10000000), 50, 0.0, 1.0);
+                histogramMax = histogram.Max();
+
+                InitializeComponent();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-
-            for (int i = 0; i < histogram.Length; i++)
+            if (SHOW_GRAPH)
             {
-                int bucketHeight;
-                try
+                base.OnPaint(e);
+
+                for (int i = 0; i < histogram.Length; i++)
                 {
-                    bucketHeight = histogram[i] / (histogramMax / 260);
+                    int bucketHeight;
+                    try
+                    {
+                        bucketHeight = histogram[i] / (histogramMax / 260);
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        Console.WriteLine("Error: Divide by zero.");
+                        break;
+                    }
+                    formGraphics.FillRectangle(brush, new Rectangle((280 / histogram.Length) * i, 260 - bucketHeight, 280 / histogram.Length, bucketHeight));
                 }
-                catch (DivideByZeroException)
-                {
-                    Console.WriteLine("Error: Divide by zero.");
-                    break;
-                }
-                formGraphics.FillRectangle(brush, new Rectangle((280/histogram.Length)*i, 260 - bucketHeight, 280 / histogram.Length, bucketHeight));
             }
         }
 
@@ -164,11 +172,18 @@ namespace AlgosProject
                     Console.WriteLine($"Unexpected distribution: '{distributionType}'");
                     break;
             }
+            
 
             //Select courses for each student
             for (int i = 0; i < numStudents; i++)
             {
-                distribution.Take(coursesPerStudent)
+                //Normalize results from 0 to 1 to course numbers (1 to C)
+                foreach(double datum in distribution.Take(coursesPerStudent))
+                {
+                    double normalized = (numCourses - 1) * datum + 1;
+                    int courseResult = (int)Math.Round(normalized);
+                    
+                }
             }
 
 
