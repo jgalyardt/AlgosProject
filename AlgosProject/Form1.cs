@@ -19,7 +19,6 @@ namespace AlgosProject
         private int[] histogram;
         private int histogramMax;
         private static Random random;
-
         private bool SHOW_GRAPH = false;
 
         public Form1()
@@ -108,7 +107,7 @@ namespace AlgosProject
             return results;
         }
 
-        //Read input from a config file, perform
+        //Read input from a config file
         private static void PartOne(String pathToConfig)
         {
             int numCourses = -1;
@@ -172,19 +171,10 @@ namespace AlgosProject
                     Console.WriteLine($"Unexpected distribution: '{distributionType}'");
                     break;
             }
-            
 
-            //Select courses for each student
-            for (int i = 0; i < numStudents; i++)
-            {
-                //Normalize results from 0 to 1 to course numbers (1 to C)
-                foreach(double datum in distribution.Take(coursesPerStudent))
-                {
-                    double normalized = (numCourses - 1) * datum + 1;
-                    int courseResult = (int)Math.Round(normalized);
-                    
-                }
-            }
+            CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
+
+            
 
 
 
