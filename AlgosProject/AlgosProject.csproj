@@ -50,6 +50,7 @@
     <Compile Include="AVLTree.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="CourseHandler.cs" />
+    <Compile Include="Distribution.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

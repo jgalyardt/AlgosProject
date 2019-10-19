@@ -18,12 +18,11 @@ namespace AlgosProject
         private System.Drawing.Graphics formGraphics;
         private int[] histogram;
         private int histogramMax;
-        private static Random random;
+        private Distribution graphDistribution;
         private bool SHOW_GRAPH = false;
 
         public Form1()
         {
-            random = new Random();
             PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
 
             if (SHOW_GRAPH)
@@ -31,9 +30,8 @@ namespace AlgosProject
                 brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
                 font = new System.Drawing.Font("Arial", 12);
                 formGraphics = CreateGraphics();
-
-                var distribution = from x in UniformDistribution() select CauchyQuantile(x);
-                histogram = CreateHistogram(distribution.Take(10000000), 50, 0.0, 1.0);
+                graphDistribution = new Distribution("Uniform");
+                histogram = CreateHistogram(graphDistribution.Take(1000000), 50, 0.0, 1.0);
                 histogramMax = histogram.Max();
 
                 InitializeComponent();
@@ -64,37 +62,8 @@ namespace AlgosProject
         }
 
         //+https://blogs.msdn.microsoft.com/ericlippert/2012/02/21/generating-random-non-uniform-data-in-c/
-        private static IEnumerable<double> UniformDistribution()
-        {
-            while (true) yield return random.NextDouble();
-        }
-
-        private static double UniformQuantile(double p) //Range: 0.0 to 1.0
-        {
-            return p;
-        }
-
-        private static double SkewedQuantile(double p) //Range: 1.0 to 2.0 --> normalize
-        {
-            return Math.Abs(1.0 - (((1 + Math.Sqrt(1-p)) - 1.0) / (2.0 - 1.0)));
-        }
-
-        private static double TieredQuantile(double p) //Range: 0.0 to 1.0
-        {
-            //This is effectively a piecewise function
-            if (p <= 0.4) return random.NextDouble() * (0.25);
-            if (p <= 0.7) return random.NextDouble() * (0.50 - 0.25) + 0.25;
-            if (p <= 0.9) return random.NextDouble() * (0.75 - 0.50) + 0.50;
-            return random.NextDouble() * (1.0 - 0.75) + 0.75;
-        }
-
-        private static double CauchyQuantile(double p) //Range: -5.0 to 5.0 --> normalize
-        {
-            return ((Math.Tan(Math.PI * (p - 0.5))) - -5.0) / (5.0 - -5.0);
-        }
-
         //This function was taken from above link about generating non-uniform data
-        private static int[] CreateHistogram(IEnumerable<double> data, int buckets, double min, double max)
+        private static int[] CreateHistogram(double[] data, int buckets, double min, double max)
         {
             int[] results = new int[buckets];
             double multiplier = buckets / (max - min);
@@ -115,6 +84,7 @@ namespace AlgosProject
             int coursesPerStudent = -1;
             String distributionType = "DEFAULT";
             String configString = "DEFAULT";
+            Distribution distribution;
 
             StreamReader sr = new StreamReader(pathToConfig);
             String line = sr.ReadLine();
@@ -151,27 +121,7 @@ namespace AlgosProject
             }
             Console.WriteLine(numCourses + ", " + numStudents + ", " + coursesPerStudent + ", " + distributionType);
 
-            //Select distribution function 
-            IEnumerable<double> distribution = null;
-            switch (distributionType)
-            {
-                case ("uniform"):
-                    distribution = from x in UniformDistribution() select UniformQuantile(x);
-                    break;
-                case ("skewed"):
-                    distribution = from x in UniformDistribution() select SkewedQuantile(x);
-                    break;
-                case ("tiered"):
-                    distribution = from x in UniformDistribution() select TieredQuantile(x);
-                    break;
-                case ("cauchy"):
-                    distribution = from x in UniformDistribution() select CauchyQuantile(x);
-                    break;
-                default:
-                    Console.WriteLine($"Unexpected distribution: '{distributionType}'");
-                    break;
-            }
-
+            distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
 
             courseHandler.MethodOne();

@@ -12,9 +12,9 @@ namespace AlgosProject
         private int numCourses;
         private int numStudents;
         private int coursesPerStudent;
-        private IEnumerable<double> distribution;
+        private Distribution distribution;
 
-        public CourseHandler(int C, int S, int K, IEnumerable<double> DIST)
+        public CourseHandler(int C, int S, int K, Distribution DIST)
         {
             numCourses = C;
             numStudents = S;
@@ -22,7 +22,7 @@ namespace AlgosProject
             distribution = DIST;
         }
 
-        
+      
         public void MethodOne()
         {
             //The first method utilizes AVL trees to store the course data
@@ -35,7 +35,7 @@ namespace AlgosProject
             {
                 selectedTree = -1;
 
-                foreach (double datum in distribution.Take(coursesPerStudent))
+                foreach (double datum in )
                 {
                     //Normalize results from 0 to 1 to course numbers (1 to C)
                     double normalized = (numCourses - 1) * datum + 1;
