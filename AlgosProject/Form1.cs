@@ -30,7 +30,7 @@ namespace AlgosProject
                 brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
                 font = new System.Drawing.Font("Arial", 12);
                 formGraphics = CreateGraphics();
-                graphDistribution = new Distribution("Uniform");
+                graphDistribution = new Distribution("cauchy");
                 histogram = CreateHistogram(graphDistribution.Take(1000000), 50, 0.0, 1.0);
                 histogramMax = histogram.Max();
 

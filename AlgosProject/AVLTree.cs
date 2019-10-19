@@ -16,7 +16,8 @@ namespace AlgosProject
 
     public class Node
     {
-        public int key, height;
+        public int height;
+        public int key;
         public Node left, right;
 
         public Node(int d)
@@ -24,11 +25,12 @@ namespace AlgosProject
             key = d;
             height = 1;
         }
+
     }
     public class AVLTree
     {
         Node root;
-        int duplicateCount = 0;
+        public int duplicateCount = 0;
 
         // A utility function to get 
         // the height of the tree  
@@ -159,23 +161,37 @@ namespace AlgosProject
             return node;
         }
 
-        // A utility function to print preorder traversal  
-        // of the tree.  
-        // The function also prints height of every node  
-        public void preOrder(Node node)
+        public void inOrder(Node node)
         {
             if (node != null)
             {
-                Console.Write(node.key + " ");
-                preOrder(node.left);
-                preOrder(node.right);
+                inOrder(node.left);
+                Console.Write(node.key / 10001 + "-" + node.key % 10001 + " ");
+                inOrder(node.right);
             }
         }
 
         public void print()
         {
-            preOrder(root);
+            inOrder(root);
             Console.WriteLine("\n------------");
+        }
+
+        public int countNodes()
+        {
+            int result = 0;
+            countNodes(root, ref result);
+            return result;
+        }
+
+        private void countNodes(Node node, ref int count)
+        {
+            if (node != null)
+            {
+                count++;
+                countNodes(node.left, ref count);
+                countNodes(node.right, ref count);
+            }
         }
 
         public bool isInTree(int val)

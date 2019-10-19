@@ -43,6 +43,17 @@ namespace AlgosProject
             return data;
         }
 
+        public int[] GetCourses(int amount, int numCourses)
+        {
+            int[] data = new int[amount];
+            for (int i = 0; i < amount; i++)
+            {
+                //Normalizes the result between 1 and numCourses (effectively selecting a course)
+                data[i] = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+            }
+            return data;
+        }
+
         //+https://blogs.msdn.microsoft.com/ericlippert/2012/02/21/generating-random-non-uniform-data-in-c/
         private static double UniformQuantile(double p) //Range: 0.0 to 1.0
         {

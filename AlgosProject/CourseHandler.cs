@@ -26,45 +26,29 @@ namespace AlgosProject
         public void MethodOne()
         {
             //The first method utilizes AVL trees to store the course data
-            AVLTree[] conflicts = new AVLTree[numCourses];
-            int numTrees = 0;
-            int selectedTree;
+            //Since the AVL Tree doesn't allow duplicates, all you need to do is insert every conflict
+            AVLTree conflicts = new AVLTree();
+            int[] data;
 
             //Select courses for each student
             for (int i = 0; i < numStudents; i++)
             {
-                selectedTree = -1;
-
-                foreach (double datum in )
+                data = distribution.GetCourses(coursesPerStudent, numCourses);
+                for (int j = 0; j < coursesPerStudent; j++)
                 {
-                    //Normalize results from 0 to 1 to course numbers (1 to C)
-                    double normalized = (numCourses - 1) * datum + 1;
-                    int courseResult = (int)Math.Round(normalized);
-                    
-                    
-                    for (int j = 0; j < numTrees && selectedTree == -1; j++)
+                    for (int k = j + 1; k < coursesPerStudent; k++)
                     {
-                        if (conflicts[j].isInTree(courseResult))
-                        {
-                            selectedTree = j;
-                        }
+                        //Taking advantage of the max course number being 10000, we can store both sides of a conflict in a single int
+                        //A conflict between course 4 and 10 is the same as a conflict between 10 and 4, so treat them as the same.
+                        int result = data[j] < data[k] ? (data[j] * 10001) + data[k] : (data[k] * 10001) + data[j];
+                        conflicts.insert(result);
                     }
-                    if (selectedTree == -1)
-                    {
-                        conflicts[numTrees] = new AVLTree();
-                        selectedTree = numTrees;
-                        numTrees++;
-                        
-                    }
-                    conflicts[selectedTree].insert(courseResult);
                 }
             }
 
             //Print out results
-            for (int i = 0; i < numTrees; i++)
-            {
-                conflicts[i].print();
-            }
+            Console.WriteLine("Number of distinct conflicts: " + conflicts.countNodes() + "\nNumber of duplicates: " + conflicts.duplicateCount);
         }
+
     }
 }
