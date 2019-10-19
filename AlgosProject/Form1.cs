@@ -174,8 +174,7 @@ namespace AlgosProject
 
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
 
-            
-
+            courseHandler.MethodOne();
 
 
         } 
