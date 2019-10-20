@@ -25,7 +25,7 @@ namespace AlgosProject
       
         public void MethodOne()
         {
-            //The first method utilizes AVL trees to store the course data
+            //The first method utilizes AVL trees
             //Since the AVL Tree doesn't allow duplicates, all you need to do is insert every conflict
             AVLTree conflicts = new AVLTree();
             int[] data;
