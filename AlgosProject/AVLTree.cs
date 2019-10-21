@@ -210,7 +210,8 @@ namespace AlgosProject
             return node.key == val ? true : isInTree(node.left, val) || isInTree(node.right, val);
         }
 
-        public void toFile(string path)
+        //Build the E and P arrays and output to a file
+        public void toFile(string path, int numCourses, int numConflicts)
         {
             
         }

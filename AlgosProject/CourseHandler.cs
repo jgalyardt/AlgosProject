@@ -50,7 +50,7 @@ namespace AlgosProject
             }
             int distinctConflicts = conflicts.countNodes();
             int duplicates = conflicts.duplicateCount;
-            conflicts.toFile("output.txt");
+            conflicts.toFile("output.txt", numCourses, distinctConflicts);
             //Print out results
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
