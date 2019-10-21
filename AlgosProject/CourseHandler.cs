@@ -22,9 +22,11 @@ namespace AlgosProject
             distribution = DIST;
         }
 
-      
-        public void MethodOne()
+        public void MethodOne(bool enforceUniqueCourses)
         {
+            //Stopwatch info from +https://stackoverflow.com/questions/14019510/calculate-the-execution-time-of-a-method
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            
             //The first method utilizes AVL trees
             //Since the AVL Tree doesn't allow duplicates, all you need to do is insert every conflict
             //This also means that no more than O(M) space is needed to store the conflicts, at the cost of maintaining an AVL tree
@@ -34,7 +36,7 @@ namespace AlgosProject
             //Select courses for each student
             for (int i = 0; i < numStudents; i++)
             {
-                data = distribution.GetCourses(coursesPerStudent, numCourses);
+                data = distribution.GetCourses(coursesPerStudent, numCourses, enforceUniqueCourses);
                 for (int j = 0; j < coursesPerStudent; j++)
                 {
                     for (int k = j + 1; k < coursesPerStudent; k++)
@@ -46,13 +48,19 @@ namespace AlgosProject
                     }
                 }
             }
-
+            int distinctConflicts = conflicts.countNodes();
+            int duplicates = conflicts.duplicateCount;
+            conflicts.toFile("output.txt");
             //Print out results
-            Console.WriteLine("[Method 1] Number of distinct conflicts: " + conflicts.countNodes() + "\nNumber of duplicates: " + conflicts.duplicateCount);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine("[Method 1] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates + "\nCompleted in " + elapsedMs + "ms");
         }
 
-        public void MethodTwo()
+        public void MethodTwo(bool enforceUniqueCourses)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             //The second method again takes advantage of the 10,000 course limit, allocating a 100,009,999‬ element array
             //The number itself comes from the maximum possible course conflict between courses 10000 and 9999
             //This makes inserting a new conflict O(1), prevents duplicates, and reads out conflicts in O(n) time
@@ -69,7 +77,7 @@ namespace AlgosProject
             //Store all conflicts in the array
             for (int i = 0; i < numStudents; i++)
             {
-                data = distribution.GetCourses(coursesPerStudent, numCourses);
+                data = distribution.GetCourses(coursesPerStudent, numCourses, false);
                 for (int j = 0; j < coursesPerStudent; j++)
                 {
                     for (int k = j + 1; k < coursesPerStudent; k++)
@@ -94,7 +102,9 @@ namespace AlgosProject
                     duplicates += conflicts[i] - 1;
                 }   
             }
-            Console.WriteLine("[Method 2] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates)
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine("[Method 2] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates + "\nCompleted in " + elapsedMs + "ms");
         }
     }
 }

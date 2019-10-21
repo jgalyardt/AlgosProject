@@ -11,7 +11,9 @@ namespace AlgosProject
         Overloaded insert()
         isInTree()
         duplicateCount
+        countNodes()
         print()
+        toFile()
     **/
 
     public class Node
@@ -188,8 +190,8 @@ namespace AlgosProject
         {
             if (node != null)
             {
-                count++;
                 countNodes(node.left, ref count);
+                count++;
                 countNodes(node.right, ref count);
             }
         }
@@ -206,6 +208,11 @@ namespace AlgosProject
                 return false;
             }
             return node.key == val ? true : isInTree(node.left, val) || isInTree(node.right, val);
+        }
+
+        public void toFile(string path)
+        {
+            
         }
     }
 }

@@ -43,13 +43,29 @@ namespace AlgosProject
             return data;
         }
 
-        public int[] GetCourses(int amount, int numCourses)
+        public int[] GetCourses(int amount, int numCourses, bool unique)
         {
             int[] data = new int[amount];
-            for (int i = 0; i < amount; i++)
+            if (unique)
             {
-                //Normalizes the result between 1 and numCourses (effectively selecting a course)
-                data[i] = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                for (int i = 0; i < amount; i++)
+                {
+                    //If each course selection needs to be unique, re-roll any duplicate choice
+                    int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                    while (data.Contains(result))
+                    {
+                        result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                    }
+                    data[i] = result;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    //Normalizes the result between 1 and numCourses (effectively selecting a course)
+                    data[i] = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                }
             }
             return data;
         }
