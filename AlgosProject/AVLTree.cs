@@ -33,6 +33,7 @@ namespace AlgosProject
     {
         Node root;
         public int duplicateCount = 0;
+        public int nodeCount = 0;
 
         // A utility function to get 
         // the height of the tree  
@@ -210,10 +211,53 @@ namespace AlgosProject
             return node.key == val ? true : isInTree(node.left, val) || isInTree(node.right, val);
         }
 
-        //Build the E and P arrays and output to a file
-        public void toFile(string path, int numCourses, int numConflicts)
+        public int getMax()
         {
-            
+            return getMax(root, -1);
+        }
+
+        private int getMax(Node node, int val)
+        {
+            if (node == null)
+                return val;
+            return getMax(node.right, node.key / 10001);
+        }
+
+        //Build the E and P arrays and output to a file
+        public void toFile(int numCourses)
+        {
+            string[] P = new string[numCourses + 1];
+            for (int i = 0; i < P.Length; i++)
+                P[i] = "0";
+
+            string E = "0,";
+            int prev = 0;
+            int eIndex = 0;
+            buildEdges(root, ref E, ref P, ref prev, ref eIndex);
+            //Write out the arrays to files
+            System.IO.File.WriteAllLines("P.txt", P);
+            //Remove the extra last comma
+            E = E.Substring(0, E.Length - 1);
+            System.IO.File.WriteAllLines("E.txt", E.Split(','));
+        }
+
+        private void buildEdges(Node node, ref string E, ref string[] P, ref int prev, ref int eIndex)
+        {
+            if (node == null)
+                return;
+
+            buildEdges(node.left, ref E, ref P, ref prev, ref eIndex);
+
+            int courseOne = node.key / 10001;
+            int courseTwo = node.key % 10001;
+
+            E += courseTwo.ToString() + ",";
+            eIndex++;
+            if (courseOne != prev)
+                P[courseOne] = eIndex.ToString();
+            prev = courseOne;
+
+            buildEdges(node.right, ref E, ref P, ref prev, ref eIndex);
         }
     }
 }
