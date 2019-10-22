@@ -42,14 +42,19 @@ namespace AlgosProject
                 int[] data = new int[coursesPerStudent];
                 if (unique)
                 {
+                    int[] chosenCourses = new int[numCourses + 1];
+                    for (int j = 0; j < numCourses + 1; j++)
+                        chosenCourses[j] = 0;
+
                     for (int j = 0; j < coursesPerStudent; j++)
                     {
                         //If each course selection needs to be unique, re-roll any duplicate choice
                         int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
-                        while (data.Contains(result))
+                        while (chosenCourses[j] == 1)
                         {
                             result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
                         }
+                        chosenCourses[j] = 1;
                         data[j] = result;
                     }
                 }
@@ -79,14 +84,19 @@ namespace AlgosProject
         {
             if (unique)
             {
+                int[] chosenCourses = new int[numCourses + 1];
+                for (int i = 0; i < numCourses + 1; i++)
+                    chosenCourses[i] = 0;
+
                 for (int i = 0; i < amount; i++)
                 {
                     //If each course selection needs to be unique, re-roll any duplicate choice
                     int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
-                    while (data.Take(i).Contains(result))
+                    while (chosenCourses[result] == 1)
                     {
                         result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
                     }
+                    chosenCourses[result] = 1;
                     data[i] = result;
                 }
             }
