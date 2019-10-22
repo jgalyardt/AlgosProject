@@ -18,7 +18,7 @@ namespace AlgosProject
         private int[] histogram;
         private int histogramMax;
         private Distribution graphDistribution;
-        private bool SHOW_GRAPH = true;
+        private bool SHOW_GRAPH = false;
 
         public Form1()
         {
