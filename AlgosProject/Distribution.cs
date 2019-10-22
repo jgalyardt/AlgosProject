@@ -67,6 +67,7 @@ namespace AlgosProject
                     }
                 }
             }
+            watch.Stop();
             return watch.ElapsedMilliseconds;
         }
 
