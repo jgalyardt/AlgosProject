@@ -226,6 +226,7 @@ namespace AlgosProject
         //Build the E and P arrays and output to a file
         public void toFile(int numCourses)
         {
+            //Any course that was never selected will point to 0 in E
             string[] P = new string[numCourses + 1];
             for (int i = 0; i < P.Length; i++)
                 P[i] = "0";

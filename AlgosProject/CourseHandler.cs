@@ -95,14 +95,39 @@ namespace AlgosProject
             int distinctConflicts = 0;
             int duplicates = 0;
 
+            //Mostly same code as in toFile() in AVLTree.cs
+            string[] P = new string[numCourses + 1];
+            for (int i = 0; i < P.Length; i++)
+                P[i] = "0";
+
+            string E = "0,";
+            int prev = 0;
+            int eIndex = 0;
+
             for (int i = 0; i < conflicts.Length; i++)
             {
                 if (conflicts[i] > 0)
                 {
+                    int courseOne = i / 10001;
+                    int courseTwo = i % 10001;
+
+                    E += courseTwo.ToString() + ",";
+                    eIndex++;
+                    if (courseOne != prev)
+                        P[courseOne] = eIndex.ToString();
+                    prev = courseOne;
+
                     distinctConflicts++;
                     duplicates += conflicts[i] - 1;
                 }   
             }
+
+            //Write out the arrays to files
+            System.IO.File.WriteAllLines("P.txt", P);
+            //Remove the extra last comma
+            E = E.Substring(0, E.Length - 1);
+            System.IO.File.WriteAllLines("E.txt", E.Split(','));
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine("[Method 2] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates + "\nCompleted in " + elapsedMs + "ms");

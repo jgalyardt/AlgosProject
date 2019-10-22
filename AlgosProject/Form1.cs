@@ -124,8 +124,8 @@ namespace AlgosProject
             distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
 
-            courseHandler.MethodOne(false);
-            courseHandler.MethodTwo(false);
+            //courseHandler.MethodOne(true);
+            courseHandler.MethodTwo(true);
         } 
     }
 }
