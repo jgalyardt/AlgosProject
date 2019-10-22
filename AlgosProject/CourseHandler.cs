@@ -31,12 +31,12 @@ namespace AlgosProject
             //Since the AVL Tree doesn't allow duplicates, all you need to do is insert every conflict
             //This also means that no more than O(M) space is needed to store the conflicts, at the cost of maintaining an AVL tree
             AVLTree conflicts = new AVLTree();
-            int[] data;
+            int[] data = new int[coursesPerStudent];
 
             //Select courses for each student
             for (int i = 0; i < numStudents; i++)
             {
-                data = distribution.GetCourses(coursesPerStudent, numCourses, enforceUniqueCourses);
+                distribution.GetCourses(ref data, coursesPerStudent, numCourses, enforceUniqueCourses);
                 for (int j = 0; j < coursesPerStudent; j++)
                 {
                     for (int k = j + 1; k < coursesPerStudent; k++)
@@ -73,12 +73,12 @@ namespace AlgosProject
                 conflicts[i] = 0;
             }
 
-            int[] data;
+            int[] data = new int[coursesPerStudent];
 
             //Store all conflicts in the array
             for (int i = 0; i < numStudents; i++)
             {
-                data = distribution.GetCourses(coursesPerStudent, numCourses, false);
+                distribution.GetCourses(ref data, coursesPerStudent, numCourses, enforceUniqueCourses);
                 for (int j = 0; j < coursesPerStudent; j++)
                 {
                     for (int k = j + 1; k < coursesPerStudent; k++)

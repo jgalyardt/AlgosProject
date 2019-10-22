@@ -75,16 +75,15 @@ namespace AlgosProject
             return data;
         }
 
-        public int[] GetCourses(int amount, int numCourses, bool unique)
+        public void GetCourses(ref int[] data, int amount, int numCourses, bool unique)
         {
-            int[] data = new int[amount];
             if (unique)
             {
                 for (int i = 0; i < amount; i++)
                 {
                     //If each course selection needs to be unique, re-roll any duplicate choice
                     int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
-                    while (data.Contains(result))
+                    while (data.Take(i).Contains(result))
                     {
                         result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
                     }
@@ -99,7 +98,6 @@ namespace AlgosProject
                     data[i] = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
                 }
             }
-            return data;
         }
 
         //+https://blogs.msdn.microsoft.com/ericlippert/2012/02/21/generating-random-non-uniform-data-in-c/

@@ -14,7 +14,6 @@ namespace AlgosProject
     public partial class Form1 : Form
     {
         private System.Drawing.SolidBrush brush;
-        private System.Drawing.Font font;
         private System.Drawing.Graphics formGraphics;
         private int[] histogram;
         private int histogramMax;
@@ -28,7 +27,6 @@ namespace AlgosProject
             if (SHOW_GRAPH)
             {
                 brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-                font = new System.Drawing.Font("Arial", 12);
                 formGraphics = CreateGraphics();
                 graphDistribution = new Distribution("tiered");
                 histogram = CreateHistogram(graphDistribution.Take(1000000), 50, 0.0, 1.0);
@@ -124,8 +122,8 @@ namespace AlgosProject
             distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
 
-            courseHandler.MethodOne(true);
-            courseHandler.MethodTwo(true);
+           // courseHandler.MethodOne(false);
+            courseHandler.MethodTwo(false);
 
         } 
     }
