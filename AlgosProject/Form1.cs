@@ -122,16 +122,9 @@ namespace AlgosProject
             distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
 
-            double sum = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                sum += distribution.Benchmark(500, 100000, 10000, true);
-            }
-            Console.WriteLine(sum / 10);
-
             //The boolean arguments here are enforceUniqueCourses and outputToFile respectively
-            //courseHandler.MethodOne(true, true);
-            //courseHandler.MethodTwo(true, true);
+            courseHandler.MethodOne(true, false);
+            courseHandler.MethodTwo(true, false);
 
         } 
     }
