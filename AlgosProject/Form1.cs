@@ -30,7 +30,7 @@ namespace AlgosProject
                 brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
                 font = new System.Drawing.Font("Arial", 12);
                 formGraphics = CreateGraphics();
-                graphDistribution = new Distribution("cauchy");
+                graphDistribution = new Distribution("tiered");
                 histogram = CreateHistogram(graphDistribution.Take(1000000), 50, 0.0, 1.0);
                 histogramMax = histogram.Max();
 
@@ -124,8 +124,9 @@ namespace AlgosProject
             distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
 
-            //courseHandler.MethodOne(true);
+            courseHandler.MethodOne(true);
             courseHandler.MethodTwo(true);
+
         } 
     }
 }

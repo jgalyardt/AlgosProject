@@ -33,6 +33,38 @@ namespace AlgosProject
                     break;
             }
         }
+
+        public double Benchmark(int coursesPerStudent, int numStudents, int numCourses, bool unique)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            for (int i = 0; i < numStudents; i++)
+            {
+                int[] data = new int[coursesPerStudent];
+                if (unique)
+                {
+                    for (int j = 0; j < coursesPerStudent; j++)
+                    {
+                        //If each course selection needs to be unique, re-roll any duplicate choice
+                        int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                        while (data.Contains(result))
+                        {
+                            result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                        }
+                        data[j] = result;
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < coursesPerStudent; j++)
+                    {
+                        //Normalizes the result between 1 and numCourses (effectively selecting a course)
+                        data[j] = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
+                    }
+                }
+            }
+            return watch.ElapsedMilliseconds;
+        }
+
         public double[] Take(int amount)
         {
             double[] data = new double[amount];
