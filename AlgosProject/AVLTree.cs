@@ -180,20 +180,19 @@ namespace AlgosProject
             Console.WriteLine("\n------------");
         }
 
-        public int countNodes()
+        public void countNodes()
         {
-            int result = 0;
-            countNodes(root, ref result);
-            return result;
+            nodeCount = 0;
+            countNodes(root);
         }
 
-        private void countNodes(Node node, ref int count)
+        private void countNodes(Node node)
         {
             if (node != null)
             {
-                countNodes(node.left, ref count);
-                count++;
-                countNodes(node.right, ref count);
+                countNodes(node.left);
+                nodeCount++;
+                countNodes(node.right);
             }
         }
 

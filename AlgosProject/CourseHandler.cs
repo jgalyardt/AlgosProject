@@ -22,7 +22,7 @@ namespace AlgosProject
             distribution = DIST;
         }
 
-        public void MethodOne(bool enforceUniqueCourses)
+        public void MethodOne(bool enforceUniqueCourses, bool outputToFile)
         {
             //Stopwatch info from +https://stackoverflow.com/questions/14019510/calculate-the-execution-time-of-a-method
             var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -48,8 +48,11 @@ namespace AlgosProject
                     }
                 }
             }
-            
-            conflicts.toFile(numCourses);
+            if (outputToFile)
+                conflicts.toFile(numCourses);
+            else
+                conflicts.countNodes();
+
             int distinctConflicts = conflicts.nodeCount;
             int duplicates = conflicts.duplicateCount;
             //Print out results
@@ -58,7 +61,7 @@ namespace AlgosProject
             Console.WriteLine("[Method 1] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates + "\nCompleted in " + elapsedMs + "ms");
         }
 
-        public void MethodTwo(bool enforceUniqueCourses)
+        public void MethodTwo(bool enforceUniqueCourses, bool outputToFile)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -95,38 +98,52 @@ namespace AlgosProject
             int distinctConflicts = 0;
             int duplicates = 0;
 
-            //Mostly same code as in toFile() in AVLTree.cs
-            string[] P = new string[numCourses + 1];
-            for (int i = 0; i < P.Length; i++)
-                P[i] = "0";
-
-            string E = "0,";
-            int prev = 0;
-            int eIndex = 0;
-
-            for (int i = 0; i < conflicts.Length; i++)
+            if (outputToFile)
             {
-                if (conflicts[i] > 0)
+                //Mostly same code as in toFile() in AVLTree.cs
+                string[] P = new string[numCourses + 1];
+                for (int i = 0; i < P.Length; i++)
+                    P[i] = "0";
+
+                string E = "0,";
+                int prev = 0;
+                int eIndex = 0;
+
+                for (int i = 0; i < conflicts.Length; i++)
                 {
-                    int courseOne = i / 10001;
-                    int courseTwo = i % 10001;
+                    if (conflicts[i] > 0)
+                    {
+                        int courseOne = i / 10001;
+                        int courseTwo = i % 10001;
 
-                    E += courseTwo.ToString() + ",";
-                    eIndex++;
-                    if (courseOne != prev)
-                        P[courseOne] = eIndex.ToString();
-                    prev = courseOne;
+                        E += courseTwo.ToString() + ",";
+                        eIndex++;
+                        if (courseOne != prev)
+                            P[courseOne] = eIndex.ToString();
+                        prev = courseOne;
 
-                    distinctConflicts++;
-                    duplicates += conflicts[i] - 1;
-                }   
+                        distinctConflicts++;
+                        duplicates += conflicts[i] - 1;
+                    }
+                }
+
+                //Write out the arrays to files
+                System.IO.File.WriteAllLines("P.txt", P);
+                //Remove the extra last comma
+                E = E.Substring(0, E.Length - 1);
+                System.IO.File.WriteAllLines("E.txt", E.Split(','));
             }
-
-            //Write out the arrays to files
-            System.IO.File.WriteAllLines("P.txt", P);
-            //Remove the extra last comma
-            E = E.Substring(0, E.Length - 1);
-            System.IO.File.WriteAllLines("E.txt", E.Split(','));
+            else
+            {
+                for (int i = 0; i < conflicts.Length; i++)
+                {
+                    if (conflicts[i] > 0)
+                    {
+                        distinctConflicts++;
+                        duplicates += conflicts[i] - 1;
+                    }
+                }
+            }
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
