@@ -18,7 +18,7 @@ namespace AlgosProject
         private int[] histogram;
         private int histogramMax;
         private Distribution graphDistribution;
-        private bool SHOW_GRAPH = false;
+        private bool SHOW_GRAPH = true;
 
         public Form1()
         {
@@ -28,7 +28,7 @@ namespace AlgosProject
             {
                 brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
                 formGraphics = CreateGraphics();
-                graphDistribution = new Distribution("tiered");
+                graphDistribution = new Distribution("cauchy");
                 histogram = CreateHistogram(graphDistribution.Take(1000000), 50, 0.0, 1.0);
                 histogramMax = histogram.Max();
 
@@ -121,7 +121,6 @@ namespace AlgosProject
 
             distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
-
             //The boolean arguments here are enforceUniqueCourses and outputToFile respectively
             courseHandler.MethodOne(true, false);
             courseHandler.MethodTwo(true, false);

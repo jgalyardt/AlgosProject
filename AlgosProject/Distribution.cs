@@ -50,11 +50,11 @@ namespace AlgosProject
                     {
                         //If each course selection needs to be unique, re-roll any duplicate choice
                         int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
-                        while (chosenCourses[j] == 1)
+                        while (result < 1 || result > numCourses || chosenCourses[result] == 1)
                         {
                             result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
                         }
-                        chosenCourses[j] = 1;
+                        chosenCourses[result] = 1;
                         data[j] = result;
                     }
                 }
@@ -93,10 +93,11 @@ namespace AlgosProject
                 {
                     //If each course selection needs to be unique, re-roll any duplicate choice
                     int result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
-                    while (chosenCourses[result] == 1)
+                    while (result < 1 || result > numCourses || chosenCourses[result] == 1)
                     {
                         result = (int)Math.Round((numCourses - 1) * distFunction(random.NextDouble()) + 1);
                     }
+                    
                     chosenCourses[result] = 1;
                     data[i] = result;
                 }
@@ -133,7 +134,7 @@ namespace AlgosProject
 
         private static double CauchyQuantile(double p) //Range: -5.0 to 5.0 --> normalize
         {
-            return ((Math.Tan(Math.PI * (p - 0.5))) - -5.0) / (5.0 - -5.0);
+            return (Math.Tan(Math.PI * (p - 0.5)) - -5.0) / (5.0 - -5.0);
         }
     }
 }
