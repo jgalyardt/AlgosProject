@@ -23,5 +23,18 @@ namespace AlgosProject
             color = -1;
             deleted = false;
         }
+
+        public void DegPush(Vertex v)
+        {
+            if (degNext == null)
+            {
+                degNext = v;
+                v.degPrev = this;
+            }
+            else
+            {
+                degNext.DegPush(v);
+            }
+        }
     }
 }

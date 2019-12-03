@@ -29,7 +29,14 @@ namespace AlgosProject
                 return false;
             }
 
-            if DL[v.degree]
+            if (DL[v.degree] == null)
+            {
+                DL[v.degree] = v;
+            }
+            else
+            {
+                DL[v.degree].DegPush(v);
+            }
 
             return true;
         }
