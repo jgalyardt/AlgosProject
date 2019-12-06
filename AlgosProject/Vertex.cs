@@ -11,7 +11,6 @@ namespace AlgosProject
         public int name;
         public int degree;
         public int color;
-        public Vertex adjNext = null;
         public Vertex degPrev = null;
         public Vertex degNext = null;
         public bool deleted;
