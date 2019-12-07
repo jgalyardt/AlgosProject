@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjList.cs" />
     <Compile Include="AVLTree.cs" />
     <Compile Include="CourseHandler.cs" />
     <Compile Include="DegreeList.cs" />
