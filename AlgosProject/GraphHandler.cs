@@ -22,19 +22,44 @@ namespace AlgosProject
         public void BuildGraph()
         {
             StreamReader srP = new StreamReader(pathToP);
-            String line = srP.ReadLine();
-            while (line != null)
-            {
-                try
-                {
-                    //TODO
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine($"Unable to parse '{line}'");
-                }
+            StreamReader srE = new StreamReader(pathToE);
+            
+            //Skip to second line since first is always 0 (course 0 doesn't exist)
+            String pLine = srP.ReadLine();
+            pLine = srP.ReadLine();
 
-                line = srP.ReadLine();
+            String eLine = srE.ReadLine();
+            eLine = srE.ReadLine();
+
+            int curr;
+            int prev;
+            int.TryParse(pLine, out prev);
+
+            while (pLine != null)
+            {
+                pLine = srP.ReadLine();
+                while (pLine == "0")
+                {
+                    pLine = srP.ReadLine();
+                }
+                if (pLine == null)
+                {
+                    while (eLine != null)
+                    {
+                        Console.WriteLine(prev.ToString() + " - " + eLine);
+                        eLine = srE.ReadLine();
+                    }
+                }
+                else 
+                {
+                    int.TryParse(pLine, out curr);
+                    for (int i = 0; i < curr - prev; i++)
+                    {
+                        Console.WriteLine(prev.ToString() + " - " + eLine);
+                        eLine = srE.ReadLine();
+                    }
+                    prev = curr;
+                }
             }
         }
 
