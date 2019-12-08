@@ -13,14 +13,16 @@ namespace AlgosProject
         string pathToE;
         bool graphBuilt = false;
 
+        int numCourses = -1;
+
         AdjList adjList;
+        DegreeList degList;
+        Vertex[] verticies;
 
         public GraphHandler(string pPath, string ePath)
         {
             pathToP = pPath;
             pathToE = ePath;
-
-            adjList = new AdjList(10000);
         }
 
         public void BuildGraph()
@@ -28,10 +30,17 @@ namespace AlgosProject
             StreamReader srP = new StreamReader(pathToP);
             StreamReader srE = new StreamReader(pathToE);
             
-            //Skip to second line since first is always 0 (course 0 doesn't exist)
+            //First line of P tells you the number of courses
             String pLine = srP.ReadLine();
+            int.TryParse(pLine, out numCourses);
+            //Allocate memory
+            adjList = new AdjList(numCourses + 1);
+            degList = new DegreeList(numCourses + 1);
+            verticies = new Vertex[numCourses + 1];
+
             pLine = srP.ReadLine();
 
+            //First line of E is always 0 so skip it
             String eLine = srE.ReadLine();
             eLine = srE.ReadLine();
 
@@ -55,8 +64,9 @@ namespace AlgosProject
                     while (eLine != null)
                     {
                         int.TryParse(eLine, out parsed);
-                        Vertex v = new Vertex(parsed);
-                        adjList.Insert(courseNumber, v);
+
+                        AddVertex(parsed, courseNumber);
+
                         //Console.WriteLine(courseNumber.ToString() + " - " + eLine);
                         eLine = srE.ReadLine();
                     }
@@ -64,11 +74,13 @@ namespace AlgosProject
                 else 
                 {
                     int.TryParse(pLine, out curr);
-                    for (int i = 0; i < curr - prev; i++)
+                    int difference = curr - prev;
+                    for (int i = 0; i < difference; i++)
                     {
                         int.TryParse(eLine, out parsed);
-                        Vertex v = new Vertex(parsed);
-                        adjList.Insert(courseNumber, v);
+
+                        AddVertex(parsed, courseNumber);
+
                         //Console.WriteLine(courseNumber.ToString() + " - " + eLine);
                         eLine = srE.ReadLine();
                     }
@@ -80,6 +92,22 @@ namespace AlgosProject
 
             adjList.Print();
             graphBuilt = true;
+        }
+
+        private void AddVertex(int a, int b)
+        {
+            //Given two courses, a and b, create them if they don't exist and add them to each other's adj list
+            if (verticies[a] == null)
+            {
+                verticies[a] = new Vertex(a);
+            }
+            adjList.Insert(b, verticies[a]);
+
+            if (verticies[b] == null)
+            {
+                verticies[b] = new Vertex(a);
+            }
+            adjList.Insert(verticies[a].course, verticies[b]);
         }
 
         public void SmallestLast()

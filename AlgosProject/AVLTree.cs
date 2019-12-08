@@ -228,7 +228,8 @@ namespace AlgosProject
             nodeCount = 0;
             //Any course that was never selected will point to 0 in E
             string[] P = new string[numCourses + 1];
-            for (int i = 0; i < P.Length; i++)
+            P[0] = numCourses.ToString();
+            for (int i = 1; i < P.Length; i++)
                 P[i] = "0";
 
             string E = "0,";
