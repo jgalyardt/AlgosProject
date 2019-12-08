@@ -8,16 +8,16 @@ namespace AlgosProject
 {
     class Vertex
     {
-        public int name;
+        public int course;
         public int degree;
         public int color;
         public Vertex degPrev = null;
         public Vertex degNext = null;
         public bool deleted;
 
-        public Vertex(int Name)
+        public Vertex(int Course)
         {
-            name = Name;
+            course = Course;
             degree = -1;
             color = -1;
             deleted = false;

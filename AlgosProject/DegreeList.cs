@@ -24,7 +24,7 @@ namespace AlgosProject
 
         public bool Insert(Vertex v)
         {
-            if (v.name <= 0 || v.degree < 0 || v.degree > maxDegree)
+            if (v.course <= 0 || v.degree < 0 || v.degree > maxDegree)
             {
                 return false;
             }

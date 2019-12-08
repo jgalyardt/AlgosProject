@@ -18,15 +18,47 @@ namespace AlgosProject
     class AdjList
     {
         public AdjVertex[] AL;
-        public int maxDegree;
+        public int size;
 
-        public AdjList(int MaxDegree)
+        public AdjList(int Size)
         {
-            maxDegree = MaxDegree;
-            AL = new AdjVertex[maxDegree];
+            size = Size;
+            AL = new AdjVertex[size];
         }
 
-        
+        public void Insert(int courseNumber, Vertex v)
+        {
+            AdjVertex temp = new AdjVertex(v);
+            if (AL[courseNumber] == null)
+            {
+                AL[courseNumber] = temp;
+            }
+            else
+            {
+                temp.next = AL[courseNumber];
+                AL[courseNumber] = temp;
+            }
+            
+        }
 
+        public void Print()
+        {
+            for (int i = 0; i < AL.Length; i++)
+            {
+                if (AL[i] == null)
+                    continue;
+
+                AdjVertex curr = AL[i];
+                string result = i.ToString() + ": ";
+                while(curr != null)
+                {
+                    result += " " + curr.target.course.ToString();
+                    curr = curr.next;
+                }
+
+                Console.WriteLine(result);
+            }
+        }
     }
+
 }
