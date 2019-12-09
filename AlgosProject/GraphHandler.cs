@@ -105,9 +105,9 @@ namespace AlgosProject
 
             if (verticies[b] == null)
             {
-                verticies[b] = new Vertex(a);
+                verticies[b] = new Vertex(b);
             }
-            adjList.Insert(verticies[a].course, verticies[b]);
+            adjList.Insert(a, verticies[b]);
         }
 
         public void SmallestLast()
