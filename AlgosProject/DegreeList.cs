@@ -40,5 +40,26 @@ namespace AlgosProject
 
             return true;
         }
+
+        public void Print()
+        {
+
+            for (int i = 0; i < DL.Length; i++)
+            {
+                if (DL[i] == null)
+                    continue;
+
+                Vertex curr = DL[i];
+                string result = "Degree-" + i.ToString() + ": ";
+                while (curr != null)
+                {
+                    result += " " + curr.course.ToString();
+                    curr = curr.degNext;
+                }
+
+                Console.WriteLine(result);
+            }
+            
+        }
     }
 }

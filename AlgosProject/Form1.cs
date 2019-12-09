@@ -132,6 +132,7 @@ namespace AlgosProject
         {
             GraphHandler graphHandler = new GraphHandler(pPath, ePath);
             graphHandler.BuildGraph();
+            graphHandler.SmallestLast();
         }
     }
 }

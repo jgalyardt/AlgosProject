@@ -117,6 +117,8 @@ namespace AlgosProject
                 BuildGraph();
             }
 
+            adjList.BuildDegreeList(ref verticies, ref degList);
+            degList.Print();
         }
     }
 }

@@ -59,6 +59,25 @@ namespace AlgosProject
                 Console.WriteLine(result);
             }
         }
+
+        public void BuildDegreeList(ref Vertex[] verticies, ref DegreeList degList)
+        {
+            for (int i = 0; i < AL.Length; i++)
+            {
+                if (AL[i] == null)
+                    continue;
+
+                int count = 0;
+                AdjVertex curr = AL[i];
+                while (curr != null)
+                {
+                    ++count;
+                    curr = curr.next;
+                }
+                verticies[i].degree = count;
+                degList.Insert(verticies[i]);
+            }
+        }
     }
 
 }
