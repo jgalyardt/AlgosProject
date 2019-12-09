@@ -64,5 +64,21 @@ namespace AlgosProject
                 Console.WriteLine(result);
             }
         }
+
+        public int GetMinColors(ref AdjList adjList)
+        {
+            int result = 0;
+            for (int i = 0; i < maxDegree; i++)
+            {
+                Vertex curr = DL[i];
+
+                while (curr != null)
+                {
+                    curr.Delete(ref adjList, this);
+                }
+            }
+
+            return result;
+        }
     }
 }

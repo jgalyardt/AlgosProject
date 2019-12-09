@@ -7,14 +7,6 @@ using System.Threading.Tasks;
 namespace AlgosProject
 {
 
-    class AdjVertex {
-        public AdjVertex next = null;
-        public Vertex target;
-
-        public AdjVertex(Vertex t) {
-            target = t;
-        }
-    }
     class AdjList
     {
         public AdjVertex[] AL;
@@ -76,6 +68,19 @@ namespace AlgosProject
                 }
                 verticies[i].degree = count;
                 degList.Insert(verticies[i]);
+            }
+        }
+
+        public void TraverseOnDelete(int course, ref DegreeList degList)
+        {
+            AdjVertex curr = AL[course];
+            while (curr != null)
+            {
+                int newDegree = --curr.target.degree;
+                curr.target.degNext = degList.DL[newDegree];
+                degList.DL[newDegree] = curr.target;
+
+                curr = curr.next;
             }
         }
     }
