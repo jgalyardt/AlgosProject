@@ -8,15 +8,16 @@ namespace AlgosProject
 {
     class DegreeList
     {
-        int maxDegree;
+        int numCourses;
+        public int maxDegree = -1;
         public Vertex[] DL;
 
-        public DegreeList(int MaxDegree)
+        public DegreeList(int NumCourses)
         {
-            maxDegree = MaxDegree;
-            DL = new Vertex[maxDegree + 1];
+            numCourses = NumCourses;
+            DL = new Vertex[numCourses + 1];
 
-            for (int i = 0; i < maxDegree + 1; i++)
+            for (int i = 0; i < numCourses + 1; i++)
             {
                 DL[i] = null;
             }
@@ -24,10 +25,13 @@ namespace AlgosProject
 
         public bool Insert(Vertex v)
         {
-            if (v.course <= 0 || v.degree < 0 || v.degree > maxDegree)
+            if (v.course <= 0 || v.degree < 0 || v.degree > numCourses)
             {
                 return false;
             }
+
+            if (v.degree > maxDegree)
+                maxDegree = v.degree;
 
             if (DL[v.degree] == null)
             {
@@ -59,7 +63,6 @@ namespace AlgosProject
 
                 Console.WriteLine(result);
             }
-            
         }
     }
 }

@@ -13,14 +13,12 @@ namespace AlgosProject
         public int color;
         public Vertex degPrev = null;
         public Vertex degNext = null;
-        public bool deleted;
 
         public Vertex(int Course)
         {
             course = Course;
             degree = -1;
             color = -1;
-            deleted = false;
         }
 
         public void DegPush(Vertex v)

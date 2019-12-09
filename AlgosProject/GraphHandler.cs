@@ -119,7 +119,15 @@ namespace AlgosProject
                 BuildGraph();
             }
 
-            
+            for (int i = 0; i < degList.maxDegree; i++)
+            {
+                Vertex curr = degList.DL[i];
+                
+                while (curr != null)
+                {
+                    //TODO
+                }
+            }
 
 
         }
