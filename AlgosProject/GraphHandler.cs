@@ -91,6 +91,8 @@ namespace AlgosProject
             }
 
             adjList.Print();
+            adjList.BuildDegreeList(ref verticies, ref degList);
+            degList.Print();
             graphBuilt = true;
         }
 
@@ -117,8 +119,9 @@ namespace AlgosProject
                 BuildGraph();
             }
 
-            adjList.BuildDegreeList(ref verticies, ref degList);
-            degList.Print();
+            
+
+
         }
     }
 }
