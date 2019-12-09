@@ -18,6 +18,7 @@ namespace AlgosProject
         AdjList adjList;
         DegreeList degList;
         Vertex[] verticies;
+        Stack stack;
 
         public GraphHandler(string pPath, string ePath)
         {
@@ -37,6 +38,7 @@ namespace AlgosProject
             adjList = new AdjList(numCourses + 1);
             degList = new DegreeList(numCourses + 1);
             verticies = new Vertex[numCourses + 1];
+            stack = new Stack(numCourses + 1);
 
             pLine = srP.ReadLine();
 
@@ -119,8 +121,7 @@ namespace AlgosProject
                 BuildGraph();
             }
 
-            int[] colors = new int[degList.GetMinColors(ref adjList)];
-
+            int[] colors = new int[degList.GetMinColors(ref adjList, ref stack)];
             //TODO: Color graph
         }
     }

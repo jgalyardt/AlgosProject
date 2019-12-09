@@ -33,7 +33,17 @@ namespace AlgosProject
 
         public int Size()
         {
-            return top - 1;
+            return top;
+        }
+
+        public void Print()
+        {
+            Console.WriteLine("(top)");
+            for (int i = 0; i < top; i++)
+            {
+                Console.WriteLine(stack[i].course.ToString() + " " + stack[i].deletedDegree.ToString());
+            }
+            Console.WriteLine("(bottom)");
         }
     }
 }

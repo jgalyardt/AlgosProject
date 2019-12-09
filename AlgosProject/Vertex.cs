@@ -11,7 +11,7 @@ namespace AlgosProject
         public int course;
         public int degree;
         public int color;
-        public int deletedDegree;
+        public int deletedDegree = -1;
         public Vertex degPrev = null;
         public Vertex degNext = null;
 
@@ -35,11 +35,13 @@ namespace AlgosProject
             }
         }
 
-        public void Delete(ref AdjList adjList, DegreeList degList)
+        public Vertex Delete(ref AdjList adjList, DegreeList degList, ref Stack stack)
         {
             deletedDegree = degree;
+            stack.Push(this);
             degList.DL[degree] = degNext;
-            adjList.TraverseOnDelete(course, ref degList);
+            degNext.degPrev = null;
+            return adjList.TraverseOnDelete(course, ref degList, ref stack);
         }
     }
 }
