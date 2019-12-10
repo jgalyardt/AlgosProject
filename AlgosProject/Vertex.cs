@@ -35,16 +35,12 @@ namespace AlgosProject
             }
         }
 
-        public bool Delete(ref AdjList adjList, DegreeList degList, ref Stack stack)
+        public void Delete(ref AdjList adjList, DegreeList degList, ref Stack stack)
         {
             deletedDegree = degree;
             stack.Push(this);
-            if (degree == 0)
-                return false;
-            degList.DL[degree] = degNext;
-            if (degNext != null)
-                degNext.degPrev = null;
-            return adjList.TraverseOnDelete(course, degree, ref degList, ref stack);
+    
+            adjList.TraverseOnDelete(course, degree, ref degList, ref stack);
         }
     }
 }

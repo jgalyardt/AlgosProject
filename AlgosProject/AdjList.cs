@@ -71,31 +71,21 @@ namespace AlgosProject
             }
         }
 
-        public bool TraverseOnDelete(int course, int removedDegree, ref DegreeList degList, ref Stack stack)
+        public void TraverseOnDelete(int course, int removedDegree, ref DegreeList degList, ref Stack stack)
         {
             AdjVertex curr = AL[course];
-            bool backtrackFlag = false;
             while (curr != null)
             {
-                if (curr.target.deletedDegree != -1)
-                {
-                    curr = curr.next;
-                    continue;
-                }
+                //if (curr.target.deletedDegree != -1)
+                //{
+                //    curr = curr.next;
+                //    continue;
+                //}
 
-                int newDegree = --curr.target.degree;
-
-                if (newDegree == -1)
-                    return false;
-
-                if (newDegree <= removedDegree)
-                    backtrackFlag = true;
-
-                degList.MoveVertex(curr.target, newDegree);
+                --curr.target.degree;
 
                 curr = curr.next;
             }
-            return backtrackFlag;
         }
     }
 

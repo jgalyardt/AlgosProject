@@ -68,28 +68,18 @@ namespace AlgosProject
         public int GetMinColors(ref AdjList adjList, ref Stack stack)
         {
             int result = 0;
-            bool backtrackFlag = false;
             Vertex curr;
 
-            for (int i = 0; i < maxDegree; i++)
+            for (int i = 0; i <= maxDegree; i++)
             {
-                backtrackFlag = false;
                 curr = DL[i];
                 while (curr != null)
                 {
-                    if (backtrackFlag || curr.Delete(ref adjList, this, ref stack))
-                        backtrackFlag = true;
+                    curr.Delete(ref adjList, this, ref stack);
                     curr = curr.degNext;
-
-                    if (stack.Size() == 1)
-                    {
-                        Console.WriteLine("stop");
-                    }
                 }
-                if (backtrackFlag)
-                    i = i - 2;
-            }
 
+            }
 
             stack.Print();
 
