@@ -35,13 +35,16 @@ namespace AlgosProject
             }
         }
 
-        public Vertex Delete(ref AdjList adjList, DegreeList degList, ref Stack stack)
+        public bool Delete(ref AdjList adjList, DegreeList degList, ref Stack stack)
         {
             deletedDegree = degree;
             stack.Push(this);
+            if (degree == 0)
+                return false;
             degList.DL[degree] = degNext;
-            degNext.degPrev = null;
-            return adjList.TraverseOnDelete(course, ref degList, ref stack);
+            if (degNext != null)
+                degNext.degPrev = null;
+            return adjList.TraverseOnDelete(course, degree, ref degList, ref stack);
         }
     }
 }

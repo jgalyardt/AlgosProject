@@ -71,10 +71,10 @@ namespace AlgosProject
             }
         }
 
-        public Vertex TraverseOnDelete(int course, ref DegreeList degList, ref Stack stack)
+        public bool TraverseOnDelete(int course, int removedDegree, ref DegreeList degList, ref Stack stack)
         {
             AdjVertex curr = AL[course];
-            Vertex newEntryPoint = null;
+            bool backtrackFlag = false;
             while (curr != null)
             {
                 if (curr.target.deletedDegree != -1)
@@ -84,8 +84,12 @@ namespace AlgosProject
                 }
 
                 int newDegree = --curr.target.degree;
+
                 if (newDegree == -1)
-                    return null;
+                    return false;
+
+                if (newDegree < removedDegree)
+                    backtrackFlag = true;
 
                 //Remove from current degree level
                 if (curr.target.degNext == null && curr.target.degPrev == null)
@@ -110,11 +114,10 @@ namespace AlgosProject
                 //Add to lower degree level at front
                 curr.target.degNext = degList.DL[newDegree];
                 degList.DL[newDegree] = curr.target;
-                newEntryPoint = curr.target;
 
                 curr = curr.next;
             }
-            return newEntryPoint;
+            return backtrackFlag;
         }
     }
 

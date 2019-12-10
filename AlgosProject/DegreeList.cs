@@ -10,7 +10,6 @@ namespace AlgosProject
     {
         int numCourses;
         public int maxDegree = -1;
-        public int minDegree = int.MaxValue;
         public Vertex[] DL;
 
         public DegreeList(int NumCourses)
@@ -33,9 +32,6 @@ namespace AlgosProject
 
             if (v.degree > maxDegree)
                 maxDegree = v.degree;
-
-            if (v.degree < minDegree)
-                minDegree = v.degree;
 
             if (DL[v.degree] == null)
             {
@@ -72,17 +68,28 @@ namespace AlgosProject
         public int GetMinColors(ref AdjList adjList, ref Stack stack)
         {
             int result = 0;
+            bool backtrackFlag = false;
+            Vertex curr;
 
-            Vertex curr = DL[minDegree];
-
-            while (curr != null)
+            for (int i = 0; i < maxDegree; i++)
             {
-                curr = curr.Delete(ref adjList, this, ref stack);
-                if (stack.Size() == 2)
+                backtrackFlag = false;
+                curr = DL[i];
+                while (curr != null)
                 {
-                    Console.WriteLine("stop");
+                    if (backtrackFlag || curr.Delete(ref adjList, this, ref stack))
+                        backtrackFlag = true;
+                    curr = curr.degNext;
+
+                    if (stack.Size() == 1)
+                    {
+                        Console.WriteLine("stop");
+                    }
                 }
+                if (backtrackFlag)
+                    i = i - 2;
             }
+
 
             stack.Print();
 

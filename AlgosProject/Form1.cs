@@ -123,8 +123,8 @@ namespace AlgosProject
             distribution = new Distribution(distributionType);
             CourseHandler courseHandler = new CourseHandler(numCourses, numStudents, coursesPerStudent, distribution);
             //The boolean arguments here are enforceUniqueCourses and outputToFile respectively
-            courseHandler.MethodOne(true, true);
-            courseHandler.MethodTwo(true, false);
+            //courseHandler.MethodOne(true, true);
+            courseHandler.MethodTwo(true, true);
 
         }
 

@@ -39,7 +39,7 @@ namespace AlgosProject
         public void Print()
         {
             Console.WriteLine("(top)");
-            for (int i = 0; i < top; i++)
+            for (int i = top - 1; i >= 0; i--)
             {
                 Console.WriteLine(stack[i].course.ToString() + " " + stack[i].deletedDegree.ToString());
             }
