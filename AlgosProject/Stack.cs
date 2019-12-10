@@ -10,6 +10,8 @@ namespace AlgosProject
     class Stack
     {
         int top = 0;
+        int degreeAtLastIncrease = int.MaxValue;
+        int maxDegreeDeleted = 0;
         Vertex[] stack;
 
         public Stack(int size)
@@ -19,6 +21,13 @@ namespace AlgosProject
 
         public void Push(Vertex v)
         {
+            //This will track the last time the deleted degree increased, finding the lower bound on number of colors needed
+            if (top > 0 && v.deletedDegree > stack[top - 1].deletedDegree)
+                degreeAtLastIncrease = v.deletedDegree;
+
+            if (v.deletedDegree > maxDegreeDeleted)
+                maxDegreeDeleted = v.deletedDegree;
+
             stack[top] = v;
             ++top;
         }
@@ -44,6 +53,21 @@ namespace AlgosProject
                 Console.WriteLine(stack[i].course.ToString() + " " + stack[i].deletedDegree.ToString());
             }
             Console.WriteLine("(bottom)");
+        }
+
+        public bool IsEmpty()
+        {
+            return top == 0;
+        }
+
+        public int GetColorsLowerBound()
+        {
+            return degreeAtLastIncrease;
+        }
+
+        public int GetMinColors()
+        {
+            return maxDegreeDeleted;
         }
     }
 }

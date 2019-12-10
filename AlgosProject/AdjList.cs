@@ -71,19 +71,26 @@ namespace AlgosProject
             }
         }
 
-        public void TraverseOnDelete(int course, int removedDegree, ref DegreeList degList, ref Stack stack)
+        public void TraverseOnDelete(int course)
         {
             AdjVertex curr = AL[course];
             while (curr != null)
             {
-                //if (curr.target.deletedDegree != -1)
-                //{
-                //    curr = curr.next;
-                //    continue;
-                //}
-
                 --curr.target.degree;
+                curr = curr.next;
+            }
+        }
 
+        public void BanColor(int course, int color, int numColors)
+        {
+            AdjVertex curr = AL[course];
+            while (curr != null)
+            {
+                if (curr.target.bannedColors == null)
+                {
+                    curr.target.bannedColors = new int[numColors + 1];
+                }
+                curr.target.bannedColors[color] = 1;
                 curr = curr.next;
             }
         }

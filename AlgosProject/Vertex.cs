@@ -15,6 +15,8 @@ namespace AlgosProject
         public Vertex degPrev = null;
         public Vertex degNext = null;
 
+        public int[] bannedColors;
+
         public Vertex(int Course)
         {
             course = Course;
@@ -35,12 +37,30 @@ namespace AlgosProject
             }
         }
 
-        public void Delete(ref AdjList adjList, DegreeList degList, ref Stack stack)
+        public void Delete(ref AdjList adjList, ref Stack stack)
         {
             deletedDegree = degree;
             stack.Push(this);
     
-            adjList.TraverseOnDelete(course, degree, ref degList, ref stack);
+            adjList.TraverseOnDelete(course);
+        }
+
+        public void AssignColor(int numColors, ref AdjList adjList)
+        {
+            if (bannedColors == null)
+            {
+                bannedColors = new int[numColors + 1];
+            }
+            for (int i = 0; i < numColors; i++)
+            {
+                if (bannedColors[i] == 0)
+                {
+                    color = i;
+                    break;
+                }
+            }
+            adjList.BanColor(course, color, numColors);
+            Console.WriteLine(course.ToString() + " -> " + color.ToString());
         }
     }
 }

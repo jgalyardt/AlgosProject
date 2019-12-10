@@ -67,7 +67,6 @@ namespace AlgosProject
 
         public int GetMinColors(ref AdjList adjList, ref Stack stack)
         {
-            int result = 0;
             Vertex curr;
 
             for (int i = 0; i <= maxDegree; i++)
@@ -75,15 +74,13 @@ namespace AlgosProject
                 curr = DL[i];
                 while (curr != null)
                 {
-                    curr.Delete(ref adjList, this, ref stack);
+                    curr.Delete(ref adjList, ref stack);
                     curr = curr.degNext;
                 }
 
             }
 
-            stack.Print();
-
-            return result;
+            return stack.GetMinColors();
         }
 
         public void MoveVertex(Vertex v, int newDegree)

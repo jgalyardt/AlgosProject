@@ -12,6 +12,7 @@ namespace AlgosProject
         string pathToP;
         string pathToE;
         bool graphBuilt = false;
+        bool verbose = false;
 
         int numCourses = -1;
 
@@ -92,9 +93,13 @@ namespace AlgosProject
                 }
             }
 
-            //adjList.Print();
+            
             adjList.BuildDegreeList(ref verticies, ref degList);
-            //degList.Print();
+            if (verbose)
+            {
+                adjList.Print();
+                degList.Print();
+            }
             graphBuilt = true;
         }
 
@@ -121,8 +126,19 @@ namespace AlgosProject
                 BuildGraph();
             }
 
-            int[] colors = new int[degList.GetMinColors(ref adjList, ref stack)];
-            //TODO: Color graph
+            int numColors = degList.GetMinColors(ref adjList, ref stack);
+            
+            if (verbose)
+            {
+                stack.Print();
+                Console.WriteLine("Min colors: " + numColors);
+            }
+
+            while(!stack.IsEmpty())
+            {
+                stack.Pop().AssignColor(numColors, ref adjList);
+            }
+            
         }
     }
 }
