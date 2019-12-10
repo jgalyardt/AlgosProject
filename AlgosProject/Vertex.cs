@@ -49,7 +49,7 @@ namespace AlgosProject
         {
             if (bannedColors == null)
             {
-                bannedColors = new int[numColors + 1];
+                bannedColors = new int[numColors];
             }
             for (int i = 0; i < numColors; i++)
             {

@@ -67,7 +67,7 @@ namespace AlgosProject
 
         public int GetMinColors()
         {
-            return maxDegreeDeleted;
+            return maxDegreeDeleted + 1;
         }
     }
 }

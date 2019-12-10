@@ -88,7 +88,7 @@ namespace AlgosProject
             {
                 if (curr.target.bannedColors == null)
                 {
-                    curr.target.bannedColors = new int[numColors + 1];
+                    curr.target.bannedColors = new int[numColors];
                 }
                 curr.target.bannedColors[color] = 1;
                 curr = curr.next;

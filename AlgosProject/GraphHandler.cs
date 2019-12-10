@@ -133,7 +133,7 @@ namespace AlgosProject
                 stack.Print();
                 Console.WriteLine("Min colors: " + numColors);
             }
-
+            stack.Print();
             while(!stack.IsEmpty())
             {
                 stack.Pop().AssignColor(numColors, ref adjList);
