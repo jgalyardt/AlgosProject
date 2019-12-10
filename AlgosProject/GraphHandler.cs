@@ -127,18 +127,19 @@ namespace AlgosProject
             }
 
             int numColors = degList.GetMinColors(ref adjList, ref stack);
-            
-            if (verbose)
-            {
-                stack.Print();
-                Console.WriteLine("Min colors: " + numColors);
-            }
+
+            Console.WriteLine("Smallest Last Results:");
             stack.Print();
-            while(!stack.IsEmpty())
+
+            while (!stack.IsEmpty())
             {
                 stack.Pop().AssignColor(numColors, ref adjList);
             }
-            
+
+            Console.WriteLine("Number of colors needed: " + stack.GetMinColors().ToString());
+            Console.WriteLine("Terminal clique size: " + stack.GetTerminalCliqueSize().ToString());
+            Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
+            Console.WriteLine("Lower bound on colors: " + stack.GetColorsLowerBound().ToString());
         }
     }
 }

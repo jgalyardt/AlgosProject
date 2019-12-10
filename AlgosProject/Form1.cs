@@ -22,7 +22,7 @@ namespace AlgosProject
 
         public Form1()
         {
-            //PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
+            PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
             PartTwo(Directory.GetCurrentDirectory() + "\\P.txt", Directory.GetCurrentDirectory() + "\\E.txt");
 
             if (SHOW_GRAPH)

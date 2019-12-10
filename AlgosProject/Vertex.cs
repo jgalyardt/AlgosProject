@@ -60,7 +60,6 @@ namespace AlgosProject
                 }
             }
             adjList.BanColor(course, color, numColors);
-            Console.WriteLine(course.ToString() + " -> " + color.ToString());
         }
     }
 }
