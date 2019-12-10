@@ -92,9 +92,9 @@ namespace AlgosProject
                 }
             }
 
-            adjList.Print();
+            //adjList.Print();
             adjList.BuildDegreeList(ref verticies, ref degList);
-            degList.Print();
+            //degList.Print();
             graphBuilt = true;
         }
 
