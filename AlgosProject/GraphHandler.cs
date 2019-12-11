@@ -139,7 +139,7 @@ namespace AlgosProject
 
             while (!stack.IsEmpty())
             {
-                stack.Pop().AssignColor(numColors, ref adjList);
+                stack.Pop().SmallestLastPass(numColors, ref adjList);
             }
 
             watch.Stop();
@@ -167,6 +167,44 @@ namespace AlgosProject
             if (verbose)
             {
                 stack.PrintWelshPowell();
+            }
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            Console.WriteLine("Number of colors needed: " + (stack.Peek().color + 1).ToString());
+            Console.WriteLine("Completed in " + elapsedMs + "ms");
+        }
+
+        public void RandomOrdering()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            if (!graphBuilt)
+            {
+                BuildGraph();
+            }
+
+            int[] order = new int[numCourses];
+            for (int i = 0; i < order.Length; i++)
+            {
+                order[i] = i + 1;
+            }
+
+            Random random = new Random();
+
+            //Fisher-Yates shuffle
+            for (int i = order.Length - 1; i > 0; i--)
+            {
+                int j = random.Next(0, i);
+                int temp = order[i];
+                order[i] = order[j];
+                order[j] = temp;
+            }
+
+            for (int i = 0; i < order.Length; i++)
+            {
+                verticies[order[i]].RandomPass(ref adjList, ref stack);
             }
 
             watch.Stop();

@@ -11,6 +11,7 @@ namespace AlgosProject
     {
         int top = 0;
         int degreeAtLastIncrease = int.MaxValue;
+        int maxColor = -1;
         int sizeAtLastIncrease = 0;
         int maxDegreeDeleted = 0;
         Vertex[] stack;
@@ -31,6 +32,9 @@ namespace AlgosProject
 
             if (v.deletedDegree > maxDegreeDeleted)
                 maxDegreeDeleted = v.deletedDegree;
+
+            if (v.color > maxColor)
+                maxColor = v.color;
 
             stack[top] = v;
             ++top;
@@ -97,6 +101,11 @@ namespace AlgosProject
         public int GetMinColors()
         {
             return maxDegreeDeleted + 1;
+        }
+
+        public int GetMaxColor()
+        {
+            return maxColor;
         }
     }
 }

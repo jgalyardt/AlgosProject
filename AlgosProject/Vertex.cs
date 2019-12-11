@@ -49,7 +49,7 @@ namespace AlgosProject
             adjList.TraverseOnDelete(course);
         }
 
-        public void AssignColor(int numColors, ref AdjList adjList)
+        public void SmallestLastPass(int numColors, ref AdjList adjList)
         {
             if (bannedColors == null)
             {
@@ -76,6 +76,14 @@ namespace AlgosProject
             }
         }
 
-        
+        public void RandomPass(ref AdjList adjList, ref Stack stack)
+        {
+            int newColor = 0;
+            while (adjList.IsAdjacentToColored(course, newColor))
+                ++newColor;
+
+            color = newColor;
+            stack.Push(this);
+        }
     }
 }
