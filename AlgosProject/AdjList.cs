@@ -94,6 +94,20 @@ namespace AlgosProject
                 curr = curr.next;
             }
         }
+
+        public bool IsAdjacentToColored(int course, int newColor)
+        {
+            AdjVertex curr = AL[course];
+            while (curr != null)
+            {
+                if (curr.target.color == newColor)
+                {
+                    return true;
+                }
+                curr = curr.next;
+            }
+            return false;
+        }
     }
 
 }

@@ -21,10 +21,11 @@ namespace AlgosProject
         Vertex[] verticies;
         Stack stack;
 
-        public GraphHandler(string pPath, string ePath)
+        public GraphHandler(string pPath, string ePath, bool Verbose)
         {
             pathToP = pPath;
             pathToE = ePath;
+            verbose = Verbose;
         }
 
         public void BuildGraph()
@@ -126,20 +127,50 @@ namespace AlgosProject
                 BuildGraph();
             }
 
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             int numColors = degList.GetMinColors(ref adjList, ref stack);
 
             Console.WriteLine("Smallest Last Results:");
-            stack.Print();
+            if (verbose)
+            {
+                stack.Print();
+            }
 
             while (!stack.IsEmpty())
             {
                 stack.Pop().AssignColor(numColors, ref adjList);
             }
 
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            
             Console.WriteLine("Number of colors needed: " + stack.GetMinColors().ToString());
             Console.WriteLine("Terminal clique size: " + stack.GetTerminalCliqueSize().ToString());
             Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
             Console.WriteLine("Lower bound on colors: " + stack.GetColorsLowerBound().ToString());
+            Console.WriteLine("Completed in " + elapsedMs + "ms");
+        }
+
+        public void WelshPowell()
+        {
+            if (!graphBuilt)
+            {
+                BuildGraph();
+            }
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+
+            degList.WelshPowell(ref adjList, ref stack);
+            stack.PrintWelshPowell();
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            Console.WriteLine("Number of colors needed: " + stack.GetMinColors().ToString());
+            Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
+            Console.WriteLine("Completed in " + elapsedMs + "ms");
         }
     }
 }

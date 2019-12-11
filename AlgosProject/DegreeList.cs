@@ -83,37 +83,26 @@ namespace AlgosProject
             return stack.GetMinColors();
         }
 
-        public void MoveVertex(Vertex v, int newDegree)
+        public void WelshPowell(ref AdjList adjList, ref Stack stack)
         {
-            //Remove from current degree level
-            if (v.degNext == null && v.degPrev == null)
-            {
-                v.degNext = DL[newDegree];
-                v.degPrev = DL[newDegree] == null ? null : DL[newDegree].degPrev;
-                if (DL[newDegree] != null)
-                    DL[newDegree].degPrev = v;
-                DL[newDegree] = v;
-                DL[newDegree + 1] = null;
-            }
-            else
-            {
-                if (v.degNext != null)
-                    v.degNext.degPrev = v.degPrev;
-                else
-                    v.degPrev.degNext = null;
+            Vertex curr;
+            int color = 0;
 
-                if (v.degPrev != null)
-                    v.degPrev.degNext = v.degNext;
-                else
-                    v.degNext.degPrev = null;
-
-                //Add to lower degree level at front
-                v.degNext = DL[newDegree];
-                v.degPrev = DL[newDegree] == null ? null : DL[newDegree].degPrev;
-                if (DL[newDegree] != null)
-                    DL[newDegree].degPrev = v;
-                DL[newDegree] = v;
+            while (stack.Size() != numCourses)
+            {
+                for (int i = maxDegree; i >= 0; i--)
+                {
+                    curr = DL[i];
+                    while (curr != null)
+                    {
+                        curr.WelshPowellPass(color, ref adjList, ref stack);
+                        curr = curr.degNext;
+                    }
+                }
+                ++color;
             }
+
         }
+
     }
 }

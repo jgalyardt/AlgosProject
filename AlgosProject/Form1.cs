@@ -22,7 +22,7 @@ namespace AlgosProject
 
         public Form1()
         {
-            PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
+            //PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
             PartTwo(Directory.GetCurrentDirectory() + "\\P.txt", Directory.GetCurrentDirectory() + "\\E.txt");
 
             if (SHOW_GRAPH)
@@ -130,9 +130,9 @@ namespace AlgosProject
 
         private static void PartTwo(String pPath, String ePath)
         {
-            GraphHandler graphHandler = new GraphHandler(pPath, ePath);
-            graphHandler.BuildGraph();
-            graphHandler.SmallestLast();
+            GraphHandler graphHandler = new GraphHandler(pPath, ePath, false);
+            //graphHandler.SmallestLast();
+            graphHandler.WelshPowell();
         }
     }
 }

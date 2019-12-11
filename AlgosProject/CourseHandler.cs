@@ -148,7 +148,7 @@ namespace AlgosProject
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine("[Method 2] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates + "\nCompleted in " + elapsedMs + "ms");
+            Console.WriteLine("[Method 2] Number of distinct conflicts: " + distinctConflicts + "\nNumber of duplicates: " + duplicates + "\nCompleted in " + elapsedMs + "ms\n");
         }
     }
 }

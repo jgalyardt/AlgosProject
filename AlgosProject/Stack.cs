@@ -51,10 +51,19 @@ namespace AlgosProject
 
         public void Print()
         {
-            Console.WriteLine("Course\t\tDeg When Deleted\t\tOrder Colored");
+            Console.WriteLine("Course\t\tDeg When Deleted\t\tOrder Colored\t\tColor");
             for (int i = top - 1; i >= 0; i--)
             {
-                Console.WriteLine(stack[i].course.ToString() + "\t\t\t" + stack[i].deletedDegree.ToString() + "\t\t\t\t\t\t" + (top - i).ToString());
+                Console.WriteLine(stack[i].course.ToString() + "\t\t\t" + stack[i].deletedDegree.ToString() + "\t\t\t\t\t\t" + (top - i).ToString() + "\t\t\t\t\t\t\t" + stack[i].color.ToString());
+            }
+        }
+
+        public void PrintWelshPowell()
+        {
+            Console.WriteLine("Course\t\tDegree\t\tOrder Colored\t\tColor");
+            for (int i = top - 1; i >= 0; i--)
+            {
+                Console.WriteLine(stack[i].course.ToString() + "\t\t\t" + stack[i].degree.ToString() + "\t\t\t" + (i).ToString() + "\t\t\t\t\t" + stack[i].color.ToString());
             }
         }
 
