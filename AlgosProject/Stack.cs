@@ -14,7 +14,7 @@ namespace AlgosProject
         int maxColor = -1;
         int sizeAtLastIncrease = 0;
         int maxDegreeDeleted = 0;
-        Vertex[] stack;
+        public Vertex[] stack;
 
         public Stack(int size)
         {
@@ -96,11 +96,6 @@ namespace AlgosProject
         public int GetTerminalCliqueSize()
         {
             return stack.Length - 1 - sizeAtLastIncrease;
-        }
-
-        public int GetMinColors()
-        {
-            return maxDegreeDeleted + 1;
         }
 
         public int GetMaxColor()

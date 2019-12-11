@@ -131,21 +131,25 @@ namespace AlgosProject
 
             int numColors = degList.GetMinColors(ref adjList, ref stack);
 
+            int maxColor = -1;
+            //Go back through stack and assign colors starting at the top (which is really an array... I know I know)
+            for (int i = stack.stack.Length - 2; i >= 0; i--)
+            {
+                int colorResult = stack.stack[i].SmallestLastPass(numColors, ref adjList);
+                if (colorResult > maxColor)
+                    maxColor = colorResult;
+            }
+
             Console.WriteLine("Smallest Last Results:");
             if (verbose)
             {
                 stack.Print();
             }
 
-            while (!stack.IsEmpty())
-            {
-                stack.Pop().SmallestLastPass(numColors, ref adjList);
-            }
-
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            
-            Console.WriteLine("Number of colors needed: " + stack.GetMinColors().ToString());
+
+            Console.WriteLine("Number of colors needed: " + (maxColor + 1).ToString());
             Console.WriteLine("Terminal clique size: " + stack.GetTerminalCliqueSize().ToString());
             Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
             Console.WriteLine("Lower bound on colors: " + stack.GetColorsLowerBound().ToString());
@@ -164,6 +168,7 @@ namespace AlgosProject
 
             degList.WelshPowell(ref adjList, ref stack);
 
+            Console.WriteLine("Welsh Powell Results:");
             if (verbose)
             {
                 stack.PrintWelshPowell();
@@ -207,10 +212,16 @@ namespace AlgosProject
                 verticies[order[i]].RandomPass(ref adjList, ref stack);
             }
 
+            Console.WriteLine("Random Results:");
+            if (verbose)
+            {
+                stack.PrintWelshPowell();
+            }
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + (stack.Peek().color + 1).ToString());
+            Console.WriteLine("Number of colors needed: " + stack.GetMaxColor().ToString());
             Console.WriteLine("Completed in " + elapsedMs + "ms");
         }
     }

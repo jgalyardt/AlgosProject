@@ -80,7 +80,7 @@ namespace AlgosProject
 
             }
 
-            return stack.GetMinColors();
+            return stack.GetMaxDegreeDeleted() + 1;
         }
 
         public void WelshPowell(ref AdjList adjList, ref Stack stack)

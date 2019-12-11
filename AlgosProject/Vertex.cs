@@ -49,7 +49,7 @@ namespace AlgosProject
             adjList.TraverseOnDelete(course);
         }
 
-        public void SmallestLastPass(int numColors, ref AdjList adjList)
+        public int SmallestLastPass(int numColors, ref AdjList adjList)
         {
             if (bannedColors == null)
             {
@@ -64,6 +64,7 @@ namespace AlgosProject
                 }
             }
             adjList.BanColor(course, color, numColors);
+            return color;
         }
 
         public void WelshPowellPass(int newColor, ref AdjList adjList, ref Stack stack)
