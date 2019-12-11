@@ -72,6 +72,7 @@ namespace AlgosProject
             {
                 color = newColor;
                 stack.Push(this);
+                wpAssigned = true;
             }
         }
 

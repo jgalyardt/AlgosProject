@@ -163,13 +163,16 @@ namespace AlgosProject
 
 
             degList.WelshPowell(ref adjList, ref stack);
-            stack.PrintWelshPowell();
+
+            if (verbose)
+            {
+                stack.PrintWelshPowell();
+            }
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + stack.GetMinColors().ToString());
-            Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
+            Console.WriteLine("Number of colors needed: " + (stack.Peek().color + 1).ToString());
             Console.WriteLine("Completed in " + elapsedMs + "ms");
         }
     }

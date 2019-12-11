@@ -44,6 +44,13 @@ namespace AlgosProject
             return stack[top];
         }
 
+        public Vertex Peek()
+        {
+            if (top < 0)
+                return null;
+            return stack[top - 1];
+        }
+
         public int Size()
         {
             return top;

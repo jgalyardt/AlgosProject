@@ -88,14 +88,15 @@ namespace AlgosProject
             Vertex curr;
             int color = 0;
 
-            while (stack.Size() != numCourses)
+            while (stack.Size() != numCourses - 1)
             {
                 for (int i = maxDegree; i >= 0; i--)
                 {
                     curr = DL[i];
                     while (curr != null)
                     {
-                        curr.WelshPowellPass(color, ref adjList, ref stack);
+                        if (!curr.wpAssigned)
+                            curr.WelshPowellPass(color, ref adjList, ref stack);
                         curr = curr.degNext;
                     }
                 }
