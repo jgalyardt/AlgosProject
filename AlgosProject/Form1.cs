@@ -132,9 +132,9 @@ namespace AlgosProject
         {
             GraphHandler graphHandler = new GraphHandler(pPath, ePath, false);
             //graphHandler.SmallestLast();
-            //graphHandler.WelshPowell();
+            graphHandler.WelshPowell();
             //graphHandler.RandomOrdering();
-            graphHandler.BogoOrdering();
+            //graphHandler.BogoOrdering();
         }
     }
 }

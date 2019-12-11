@@ -95,7 +95,7 @@ namespace AlgosProject
                     curr = DL[i];
                     while (curr != null)
                     {
-                        if (!curr.wpAssigned)
+                        if (!curr.wpAssigned && curr.wpInvalidColor != color)
                             curr.WelshPowellPass(color, ref adjList, ref stack);
                         curr = curr.degNext;
                     }

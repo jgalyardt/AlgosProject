@@ -20,6 +20,7 @@ namespace AlgosProject
 
         //For welsh-powell
         public bool wpAssigned = false;
+        public int wpInvalidColor = -1;
 
         public Vertex(int Course)
         {
@@ -73,6 +74,7 @@ namespace AlgosProject
             {
                 color = newColor;
                 stack.Push(this);
+                adjList.SetInvalidColor(course, newColor);
                 wpAssigned = true;
             }
         }

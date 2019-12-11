@@ -109,6 +109,16 @@ namespace AlgosProject
             return false;
         }
 
+        public void SetInvalidColor(int course, int invalidColor)
+        {
+            AdjVertex curr = AL[course];
+            while (curr != null)
+            {
+                curr.target.wpInvalidColor = invalidColor;
+                curr = curr.next;
+            }
+        }
+
         public bool HasConflicts(ref Vertex[] vertices)
         {
             bool result = false;
