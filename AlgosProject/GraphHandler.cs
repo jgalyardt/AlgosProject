@@ -133,7 +133,7 @@ namespace AlgosProject
 
             int maxColor = -1;
             //Go back through stack and assign colors starting at the top (which is really an array... I know I know)
-            for (int i = stack.stack.Length - 2; i >= 0; i--)
+            for (int i = stack.Size() - 1; i >= 0; i--)
             {
                 int colorResult = stack.stack[i].SmallestLastPass(numColors, ref adjList);
                 if (colorResult > maxColor)
@@ -164,7 +164,6 @@ namespace AlgosProject
             }
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
-
 
             degList.WelshPowell(ref adjList, ref stack);
 
@@ -209,7 +208,8 @@ namespace AlgosProject
 
             for (int i = 0; i < order.Length; i++)
             {
-                verticies[order[i]].RandomPass(ref adjList, ref stack);
+                if (verticies[order[i]] != null)
+                    verticies[order[i]].RandomPass(ref adjList, ref stack);
             }
 
             Console.WriteLine("Random Results:");
@@ -243,7 +243,8 @@ namespace AlgosProject
 
             for (int i = 1; i < verticies.Length; i++)
             {
-                verticies[i].color = random.Next(numColors);
+                if (verticies[i] != null)
+                    verticies[i].color = random.Next(numColors);
             }
 
             while(adjList.HasConflicts(ref verticies))
@@ -251,7 +252,8 @@ namespace AlgosProject
                 ++numColors;
                 for (int i = 1; i < verticies.Length; i++)
                 {
-                    verticies[i].color = random.Next(numColors);
+                    if (verticies[i] != null)
+                        verticies[i].color = random.Next(numColors);
                 }
             }
 

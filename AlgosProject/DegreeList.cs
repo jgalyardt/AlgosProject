@@ -86,21 +86,15 @@ namespace AlgosProject
         public void WelshPowell(ref AdjList adjList, ref Stack stack)
         {
             Vertex curr;
-            int color = 0;
 
-            while (stack.Size() != numCourses - 1)
+            for (int i = maxDegree; i >= 0; i--)
             {
-                for (int i = maxDegree; i >= 0; i--)
+                curr = DL[i];
+                while (curr != null)
                 {
-                    curr = DL[i];
-                    while (curr != null)
-                    {
-                        if (!curr.wpAssigned && curr.wpInvalidColor != color)
-                            curr.WelshPowellPass(color, ref adjList, ref stack);
-                        curr = curr.degNext;
-                    }
+                    curr.WelshPowellPass(maxDegree, ref adjList, ref stack);
+                    curr = curr.degNext;
                 }
-                ++color;
             }
 
         }

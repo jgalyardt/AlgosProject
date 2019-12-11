@@ -15,12 +15,7 @@ namespace AlgosProject
         public Vertex degPrev = null;
         public Vertex degNext = null;
 
-        //For smallest last
         public int[] bannedColors;
-
-        //For welsh-powell
-        public bool wpAssigned = false;
-        public int wpInvalidColor = -1;
 
         public Vertex(int Course)
         {
@@ -68,15 +63,22 @@ namespace AlgosProject
             return color;
         }
 
-        public void WelshPowellPass(int newColor, ref AdjList adjList, ref Stack stack)
+        public void WelshPowellPass(int numColors, ref AdjList adjList, ref Stack stack)
         {
-            if (!adjList.IsAdjacentToColored(course, newColor))
+            if (bannedColors == null)
             {
-                color = newColor;
-                stack.Push(this);
-                adjList.SetInvalidColor(course, newColor);
-                wpAssigned = true;
+                bannedColors = new int[numColors];
             }
+            for (int i = 0; i < numColors; i++)
+            {
+                if (bannedColors[i] == 0)
+                {
+                    color = i;
+                    break;
+                }
+            }
+            adjList.BanColor(course, color, numColors);
+            stack.Push(this);
         }
 
         public void RandomPass(ref AdjList adjList, ref Stack stack)
