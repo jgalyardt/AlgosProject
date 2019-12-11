@@ -246,7 +246,7 @@ namespace AlgosProject
                 verticies[i].color = random.Next(numColors);
             }
 
-            while(adjList.HasConflicts(ref verticies)
+            while(adjList.HasConflicts(ref verticies))
             {
                 ++numColors;
                 for (int i = 1; i < verticies.Length; i++)
@@ -255,7 +255,7 @@ namespace AlgosProject
                 }
             }
 
-            Console.WriteLine("Random Results:");
+            Console.WriteLine("Bogo Results:");
             if (verbose)
             {
                 stack.PrintDecreasing();
@@ -264,7 +264,7 @@ namespace AlgosProject
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + numColors.ToString());
+            Console.WriteLine("Number of colors needed: " + numColors.ToString() + " (?)");
             Console.WriteLine("Completed in " + elapsedMs + "ms");
         }
     }
