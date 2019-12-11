@@ -108,6 +108,30 @@ namespace AlgosProject
             }
             return false;
         }
+
+        public bool HasConflicts(ref Vertex[] vertices)
+        {
+            bool result = false;
+
+            for (int i = 0; i < AL.Length && !result; i++)
+            {
+                if (AL[i] == null)
+                    continue;
+
+                AdjVertex curr = AL[i];
+                while (curr != null)
+                {
+                    if (vertices[i].color == curr.target.color)
+                    {
+                        result = true;
+                        break;
+                    }
+                    curr = curr.next;
+                }
+            }
+
+            return result;
+        }
     }
 
 }

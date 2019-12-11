@@ -171,7 +171,7 @@ namespace AlgosProject
             Console.WriteLine("Welsh Powell Results:");
             if (verbose)
             {
-                stack.PrintWelshPowell();
+                stack.PrintDecreasing();
             }
 
             watch.Stop();
@@ -183,12 +183,12 @@ namespace AlgosProject
 
         public void RandomOrdering()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
             if (!graphBuilt)
             {
                 BuildGraph();
             }
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
 
             int[] order = new int[numCourses];
             for (int i = 0; i < order.Length; i++)
@@ -215,13 +215,56 @@ namespace AlgosProject
             Console.WriteLine("Random Results:");
             if (verbose)
             {
-                stack.PrintWelshPowell();
+                stack.PrintDecreasing();
             }
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
             Console.WriteLine("Number of colors needed: " + stack.GetMaxColor().ToString());
+            Console.WriteLine("Completed in " + elapsedMs + "ms");
+        }
+
+        public void BogoOrdering()
+        {
+            //Loosely based on bogo sort. 
+            //Assign random colors from 0-n for each vertex. Check if valid.
+            //If not, increase n and try again.
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            if (!graphBuilt)
+            {
+                BuildGraph();
+            }
+
+            Random random = new Random();
+            int numColors = 1;
+
+            for (int i = 1; i < verticies.Length; i++)
+            {
+                verticies[i].color = random.Next(numColors);
+            }
+
+            while(adjList.HasConflicts(ref verticies)
+            {
+                ++numColors;
+                for (int i = 1; i < verticies.Length; i++)
+                {
+                    verticies[i].color = random.Next(numColors);
+                }
+            }
+
+            Console.WriteLine("Random Results:");
+            if (verbose)
+            {
+                stack.PrintDecreasing();
+            }
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            Console.WriteLine("Number of colors needed: " + numColors.ToString());
             Console.WriteLine("Completed in " + elapsedMs + "ms");
         }
     }

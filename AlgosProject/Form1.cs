@@ -131,9 +131,9 @@ namespace AlgosProject
         private static void PartTwo(String pPath, String ePath)
         {
             GraphHandler graphHandler = new GraphHandler(pPath, ePath, false);
-            graphHandler.SmallestLast();
+            //graphHandler.SmallestLast();
             //graphHandler.WelshPowell();
-            //graphHandler.RandomOrdering();
+            graphHandler.RandomOrdering();
         }
     }
 }

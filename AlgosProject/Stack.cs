@@ -69,7 +69,7 @@ namespace AlgosProject
             }
         }
 
-        public void PrintWelshPowell()
+        public void PrintDecreasing()
         {
             Console.WriteLine("Course\t\tDegree\t\tOrder Colored\t\tColor");
             for (int i = top - 1; i >= 0; i--)
