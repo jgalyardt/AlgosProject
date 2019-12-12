@@ -13,6 +13,7 @@ namespace AlgosProject
         string pathToE;
         bool graphBuilt = false;
         bool verbose = false;
+        bool timingMode = false;
 
         int numCourses = -1;
 
@@ -21,11 +22,12 @@ namespace AlgosProject
         Vertex[] verticies;
         Stack stack;
 
-        public GraphHandler(string pPath, string ePath, bool Verbose)
+        public GraphHandler(string pPath, string ePath, bool Verbose, bool TimingMode)
         {
             pathToP = pPath;
             pathToE = ePath;
             verbose = Verbose;
+            timingMode = TimingMode;
         }
 
         public void BuildGraph()
@@ -70,8 +72,6 @@ namespace AlgosProject
                         int.TryParse(eLine, out parsed);
 
                         AddVertex(parsed, courseNumber);
-
-                        //Console.WriteLine(courseNumber.ToString() + " - " + eLine);
                         eLine = srE.ReadLine();
                     }
                 }
@@ -84,8 +84,6 @@ namespace AlgosProject
                         int.TryParse(eLine, out parsed);
 
                         AddVertex(parsed, courseNumber);
-
-                        //Console.WriteLine(courseNumber.ToString() + " - " + eLine);
                         eLine = srE.ReadLine();
                     }
                     prev = curr;
@@ -93,7 +91,6 @@ namespace AlgosProject
                     extra = 0;
                 }
             }
-
             
             adjList.BuildDegreeList(ref verticies, ref degList);
             if (verbose)
@@ -120,7 +117,7 @@ namespace AlgosProject
             adjList.Insert(a, verticies[b]);
         }
 
-        public void SmallestLast()
+        public long SmallestLast()
         {
             if (!graphBuilt)
             {
@@ -140,23 +137,26 @@ namespace AlgosProject
                     maxColor = colorResult;
             }
 
-            Console.WriteLine("Smallest Last Results:");
-            if (verbose)
-            {
-                stack.Print();
-            }
-
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + (maxColor + 1).ToString());
-            Console.WriteLine("Terminal clique size: " + stack.GetTerminalCliqueSize().ToString());
-            Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
-            Console.WriteLine("Lower bound on colors: " + stack.GetColorsLowerBound().ToString());
-            Console.WriteLine("Completed in " + elapsedMs + "ms");
+            if (!timingMode)
+            {
+                Console.WriteLine("Smallest Last Results:");
+                if (verbose)
+                {
+                    stack.Print();
+                }
+                Console.WriteLine("Number of colors used: " + (maxColor + 1).ToString());
+                Console.WriteLine("Terminal clique size: " + stack.GetTerminalCliqueSize().ToString());
+                Console.WriteLine("Maximmum degree deleted: " + stack.GetMaxDegreeDeleted().ToString());
+                Console.WriteLine("Lower bound on colors: " + stack.GetColorsLowerBound().ToString());
+                Console.WriteLine("Completed in " + elapsedMs + "ms");
+            }
+            return elapsedMs;
         }
 
-        public void WelshPowell()
+        public long WelshPowell()
         {
             if (!graphBuilt)
             {
@@ -166,21 +166,25 @@ namespace AlgosProject
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
             degList.WelshPowell(ref adjList, ref stack);
-
-            Console.WriteLine("Welsh Powell Results:");
-            if (verbose)
-            {
-                stack.PrintDecreasing();
-            }
-
+            
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + (stack.Peek().color + 1).ToString());
-            Console.WriteLine("Completed in " + elapsedMs + "ms");
+            if (!timingMode)
+            {
+                Console.WriteLine("Welsh Powell Results:");
+                if (verbose)
+                {
+                    stack.PrintDecreasing();
+                }
+                Console.WriteLine("Number of colors used: " + stack.GetMaxColor().ToString());
+                Console.WriteLine("Completed in " + elapsedMs + "ms");
+            }
+
+            return elapsedMs;
         }
 
-        public void RandomOrdering()
+        public long RandomOrdering()
         {
             if (!graphBuilt)
             {
@@ -212,20 +216,23 @@ namespace AlgosProject
                     verticies[order[i]].RandomPass(ref adjList, ref stack);
             }
 
-            Console.WriteLine("Random Results:");
-            if (verbose)
-            {
-                stack.PrintDecreasing();
-            }
-
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + stack.GetMaxColor().ToString());
-            Console.WriteLine("Completed in " + elapsedMs + "ms");
+            if (!timingMode)
+            {
+                Console.WriteLine("Random Results:");
+                if (verbose)
+                {
+                    stack.PrintDecreasing();
+                }
+                Console.WriteLine("Number of colors used: " + stack.GetMaxColor().ToString());
+                Console.WriteLine("Completed in " + elapsedMs + "ms");
+            }
+            return elapsedMs;
         }
 
-        public void BogoOrdering()
+        public long BogoColoring()
         {
             //Loosely based on bogo sort. 
             //Assign random colors from 0-n for each vertex. Check if valid.
@@ -257,17 +264,29 @@ namespace AlgosProject
                 }
             }
 
-            Console.WriteLine("Bogo Results:");
-            if (verbose)
+            int numUnique = 0;
+            int[] colors = new int[numColors];
+            for (int i = 0; i < verticies.Length; i++)
             {
-                stack.PrintDecreasing();
+                if (verticies[i] != null && !colors.Contains(verticies[i].color))
+                {
+                    colors[numUnique] = verticies[i].color;
+                    numUnique++;
+                }
             }
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            Console.WriteLine("Number of colors needed: " + numColors.ToString() + " (?)");
-            Console.WriteLine("Completed in " + elapsedMs + "ms");
+            if (!timingMode)
+            {
+                Console.WriteLine("Bogo Results:");
+                Console.WriteLine("Value of n at finish: " + numColors.ToString());
+                Console.WriteLine("Number of colors used: " + numUnique.ToString());
+                Console.WriteLine("Completed in " + elapsedMs + "ms");
+            }
+
+            return elapsedMs;
         }
     }
 }

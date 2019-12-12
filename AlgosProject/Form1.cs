@@ -18,11 +18,11 @@ namespace AlgosProject
         private int[] histogram;
         private int histogramMax;
         private Distribution graphDistribution;
-        private bool SHOW_GRAPH = false;
 
+        private bool SHOW_GRAPH = false;
         public Form1()
         {
-            //PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
+            PartOne(Directory.GetCurrentDirectory() + "\\config.txt");
             PartTwo(Directory.GetCurrentDirectory() + "\\P.txt", Directory.GetCurrentDirectory() + "\\E.txt");
 
             if (SHOW_GRAPH)
@@ -130,11 +130,15 @@ namespace AlgosProject
 
         private static void PartTwo(String pPath, String ePath)
         {
-            GraphHandler graphHandler = new GraphHandler(pPath, ePath, false);
+            bool TIMING_MODE = false;
+            bool VERBOSE = false;
+            
+            GraphHandler graphHandler = new GraphHandler(pPath, ePath, VERBOSE, TIMING_MODE);
             //graphHandler.SmallestLast();
-            graphHandler.WelshPowell();
+            //graphHandler.WelshPowell();
             //graphHandler.RandomOrdering();
-            //graphHandler.BogoOrdering();
+            graphHandler.BogoColoring();
+            
         }
     }
 }

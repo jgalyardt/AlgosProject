@@ -36,8 +36,10 @@ namespace AlgosProject
             if (v.color > maxColor)
                 maxColor = v.color;
 
+
             stack[top] = v;
             ++top;
+
         }
 
         public Vertex Pop()
