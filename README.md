@@ -15,6 +15,6 @@ The project had several parts:
     a) Smallest Last ordering  
     b) Welsh-Powell ordering  
     c) Random ordering  
-    d) "Bogo" ordering, a fourth algortihm that was up to us to come up with, just for fun. Random wasn't bad enough, so I made a worse one.  
+    d) "Bogo" ordering, a fourth algortihm that was up to us to come up with, just for fun. Random wasn't bad enough, so I made something worse.  
 5) Evaluate the run-time efficiency of each of these steps
  
