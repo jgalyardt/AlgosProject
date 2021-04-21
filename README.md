@@ -1,6 +1,7 @@
 # AlgosProject
 
-CSE 7350 Final Project
+CSE 7350 Final Project 
+
 Full report found here: https://docs.google.com/document/d/1ma0nuc9Mgt1yzgbWw9eaB9Wsdvd7Y8OEJaOKdhPob-A/edit?usp=sharing
 
 Goal of this project was to generate a color a vertex graph, which represents course schedules for a hypothetical school.
